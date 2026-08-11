@@ -1,0 +1,13 @@
+name: marecoral-prod
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_WHATSAPP_URL: "${VITE_WHATSAPP_URL:-}"
+    container_name: marecoral-web-prod
+    ports:
+      - "127.0.0.1:${MARE_CORAL_PROD_PORT:-4312}:80"
+    restart: unless-stopped
