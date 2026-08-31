@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', '.tools', 'private', 'Logo praiana coral e rosa*_files']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

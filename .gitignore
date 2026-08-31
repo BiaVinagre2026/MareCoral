@@ -5,3 +5,8 @@ dist/
 *.log
 .DS_Store
 .vite/
+.tools/
+private/
+
+# Mídia de voz/vídeo fica local até a autorização específica de publicação.
+public/videos/coral/

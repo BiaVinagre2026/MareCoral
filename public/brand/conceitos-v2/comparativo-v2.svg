@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Quatro conceitos de logo da Maré Coral Fitwear</title>
+  <desc id="desc">Comparativo das opções Sol e Maré, Monograma MC, Onda em Movimento e Quatro Ritmos.</desc>
+  <rect width="1280" height="720" fill="#FD3774" opacity="0.04"/>
+  <text x="640" y="55" fill="#FD5D2A" font-family="Montserrat, Arial, sans-serif" font-size="36" font-weight="800" text-anchor="middle">Maré Coral Fitwear · opções de logo</text>
+
+  <g fill="none" stroke="#FD3774" stroke-width="2" opacity="0.28">
+    <rect x="35" y="82" width="590" height="285" rx="28"/>
+    <rect x="655" y="82" width="590" height="285" rx="28"/>
+    <rect x="35" y="397" width="590" height="285" rx="28"/>
+    <rect x="655" y="397" width="590" height="285" rx="28"/>
+  </g>
+
+  <g font-family="Montserrat, Arial, sans-serif" font-size="20" font-weight="800" fill="#FD3774">
+    <text x="58" y="116">1 · SOL E MARÉ</text>
+    <text x="678" y="116">2 · MONOGRAMA MC</text>
+    <text x="58" y="431">3 · ONDA EM MOVIMENTO</text>
+    <text x="678" y="431">4 · QUATRO RITMOS</text>
+  </g>
+
+  <image x="160" y="125" width="340" height="230" preserveAspectRatio="xMidYMid meet" xlink:href="opcao-01-sol-e-mare.svg" href="opcao-01-sol-e-mare.svg"/>
+  <image x="690" y="130" width="520" height="220" preserveAspectRatio="xMidYMid meet" xlink:href="opcao-02-monograma-mc.svg" href="opcao-02-monograma-mc.svg"/>
+  <image x="160" y="440" width="340" height="230" preserveAspectRatio="xMidYMid meet" xlink:href="opcao-03-onda-em-movimento.svg" href="opcao-03-onda-em-movimento.svg"/>
+  <image x="780" y="440" width="340" height="230" preserveAspectRatio="xMidYMid meet" xlink:href="opcao-04-quatro-ritmos.svg" href="opcao-04-quatro-ritmos.svg"/>
+</svg>

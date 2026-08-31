@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 110" width="840" height="220">
+  <defs><linearGradient id="gh" x1="10" y1="20" x2="96" y2="84" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8A48"></stop><stop offset="0.55" stop-color="#FF5A3C"></stop><stop offset="1" stop-color="#F0417A"></stop>
+  </linearGradient></defs>
+  <g transform="translate(6,6) scale(0.98)">
+  <path d="M14 34h44c9 0 14-7 12-13" stroke="url(#gh)" stroke-width="8" stroke-linecap="round" fill="none"></path>
+  <path d="M10 52h62c11 0 17-9 14-16" stroke="url(#gh)" stroke-width="9" stroke-linecap="round" fill="none"></path>
+  <path d="M20 70h40c9 0 14 7 12 13" stroke="url(#gh)" stroke-width="7.5" stroke-linecap="round" fill="none"></path>
+  <circle cx="86" cy="72" r="7" fill="url(#gh)"></circle></g>
+  <text x="128" y="56" font-family="Archivo, Helvetica, Arial, sans-serif" font-weight="900" font-size="42" letter-spacing="-1.4" fill="#FF5A3C">Maré Coral</text>
+  <text x="130" y="80" font-family="Archivo, Helvetica, Arial, sans-serif" font-weight="700" font-size="13" letter-spacing="5.4" fill="#FF5A3C">FITWEAR</text>
+</svg>

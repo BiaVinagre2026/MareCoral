@@ -11,6 +11,19 @@ services:
     environment:
       CHOKIDAR_USEPOLLING: "true"
       VITE_WHATSAPP_URL: "${VITE_WHATSAPP_URL:-}"
+      VITE_INSTAGRAM_URL: "${VITE_INSTAGRAM_URL:-}"
+      VITE_FACEBOOK_URL: "${VITE_FACEBOOK_URL:-}"
+      VITE_TIKTOK_URL: "${VITE_TIKTOK_URL:-}"
+      VITE_SITE_URL: "${VITE_SITE_URL:-https://marecoral.com.br}"
+      CATALOG_SITE_URL: "${CATALOG_SITE_URL:-https://marecoral.com.br}"
+      VITE_MOSTRUARIO_API_URL: "${VITE_MOSTRUARIO_API_URL:-/api/v1}"
+      VITE_MOSTRUARIO_TENANT: "${VITE_MOSTRUARIO_TENANT:-mare-coral}"
+      VITE_MOSTRUARIO_CATALOG_TOKEN: "${VITE_MOSTRUARIO_CATALOG_TOKEN:-}"
+      VITE_ALLOW_DEMO_CATALOG: "${VITE_ALLOW_DEMO_CATALOG:-true}"
+      MOSTRUARIO_PROXY_TARGET: "${MOSTRUARIO_PROXY_TARGET:-http://host.docker.internal:8000}"
+      VITE_CHECKOUT_ENABLED: "${VITE_CHECKOUT_ENABLED:-false}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - .:/app
       - marecoral_node_modules:/app/node_modules

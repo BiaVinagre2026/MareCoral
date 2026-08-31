@@ -1,8 +1,8 @@
 # Maré Coral Fitwear
 
-Landing page de pré-lançamento da Maré Coral, criada a partir da base white-label do projeto CCNF.
+Projeto da loja própria da Maré Coral, criado a partir da base white-label do projeto CCNF. O deploy fica intencionalmente adiado até a validação do catálogo, gateway, frete, dados empresariais e integrações sociais.
 
-## Stack reaproveitada do CCNF
+## Stack do projeto
 
 - React 19 + TypeScript
 - Vite 7
@@ -10,8 +10,9 @@ Landing page de pré-lançamento da Maré Coral, criada a partir da base white-l
 - TailwindCSS 4 disponível
 - Docker para desenvolvimento no Windows
 - Build multi-stage e Nginx para produção
+- Backend Rails/PostgreSQL/Redis do Meu Mostruário, isolado pelo tenant `mare-coral`
 
-Todo o domínio específico de cadastro de visitantes, autenticação e Rails do CCNF foi excluído desta adaptação.
+O frontend visual veio da base CCNF. Catálogo, variantes, estoque cadastrado e pedidos agora usam o backend white-label do Meu Mostruário.
 
 ## Portas isoladas
 
@@ -21,6 +22,8 @@ Todo o domínio específico de cadastro de visitantes, autenticação e Rails do
 | Produção local | http://localhost:4312 | 4312 |
 
 As portas ficam vinculadas somente a `127.0.0.1` e não expõem o projeto na rede local. Os nomes de projeto, containers e volumes começam com `marecoral`, evitando colisões com CCNF, Acquamare e MeuMostruario.
+
+Na configuração local atual, a prévia Docker está em `http://127.0.0.1:4311`, pois a 4310 já estava ocupada e foi preservada.
 
 ## Rodar no Windows com Docker Desktop
 
@@ -32,7 +35,7 @@ docker compose up --build -d
 docker compose ps
 ```
 
-Acesse http://localhost:4310.
+Acesse a porta definida por `MARE_CORAL_WEB_PORT` no `.env`.
 
 Para encerrar somente a Maré Coral:
 
@@ -54,9 +57,33 @@ Acesse http://localhost:4312. Para encerrar:
 docker compose -f docker-compose.prod.yml down
 ```
 
-## Configurar a lista VIP
+## Backend Meu Mostruário
 
-Preencha `VITE_WHATSAPP_URL` no arquivo `.env`. Enquanto a URL não estiver configurada, o botão aparece como “WhatsApp em configuração” e não envia dados para lugar algum.
+Para desenvolvimento, o backend deve estar ativo em `http://127.0.0.1:8000`. O Vite e o Nginx encaminham `/api`, `/uploads` e `/rails` para ele; o navegador não precisa abrir outra origem.
+
+Variáveis principais:
+
+- `VITE_MOSTRUARIO_TENANT=mare-coral` seleciona o schema isolado;
+- `VITE_MOSTRUARIO_CATALOG_TOKEN` autoriza a criação de pedidos;
+- `VITE_ALLOW_DEMO_CATALOG=true` mantém um fallback visual apenas no desenvolvimento;
+- `VITE_CHECKOUT_ENABLED=true` habilita o registro do pedido.
+
+O frontend envia somente IDs e quantidade da variação escolhida. O preço é recuperado pelo backend. O link atual aceita pedidos, registra endereço estruturado e reserva estoque. O pagamento permanece desligado até a configuração do frete e o cadastro das credenciais do gateway próprio no tenant.
+
+## Configurar canais
+
+Copie `.env.example` para `.env` e preencha as URLs reais de Instagram, Facebook, TikTok e WhatsApp. Enquanto elas não estiverem configuradas, o site não envia dados para redes externas.
+
+Nenhuma credencial de pagamento deve entrar em variáveis `VITE_*`. Segredos do gateway pertencem exclusivamente à configuração protegida do tenant no Meu Mostruário.
+
+## Catálogo e redes sociais
+
+O tenant Maré Coral possui oito produtos de preparação do primeiro drop. `src/data/catalog.json` permanece como fallback de desenvolvimento e fonte provisória dos feeds. Durante o build, ele gera:
+
+- `/feeds/meta-catalog.csv`
+- `/feeds/tiktok-catalog.csv`
+
+Os feeds só devem ser cadastrados nas redes depois do domínio estar publicado em HTTPS e dos dados demonstração terem sido substituídos pelos produtos reais. O plano completo está em [docs/LOJA-E-INTEGRACOES.md](docs/LOJA-E-INTEGRACOES.md).
 
 ## Validações
 
@@ -70,4 +97,6 @@ docker compose -f docker-compose.prod.yml config
 
 ## Situação da Semana 1
 
-O acompanhamento operacional está em [docs/SEMANA1.md](docs/SEMANA1.md). A aplicação cobre a fundação técnica; domínio, redes sociais, CNPJ, fornecedores e integrações de pagamento exigem ações externas da responsável pelo negócio.
+O acompanhamento operacional está em [docs/SEMANA1.md](docs/SEMANA1.md). A aplicação cobre a fundação técnica, vitrine, produto, carrinho, pedido, endereço e reserva de estoque. A regra comercial de frete, gateway, dados empresariais, fotos finais e operação ainda exigem conclusão antes do deploy.
+
+Os requisitos aprovados para marca, família do logo, Coral Real, Coral Ícone, try-on e vídeo estão em [docs/REQUISITOS_VISUAIS.md](docs/REQUISITOS_VISUAIS.md).

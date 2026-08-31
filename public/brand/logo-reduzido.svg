@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Símbolo Maré Coral</title>
+  <desc id="desc">Símbolo reduzido da Maré Coral com ondas em coral, rosa e verde-água.</desc>
+  <defs>
+    <linearGradient id="coral-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FD5D2A"/>
+      <stop offset="0.52" stop-color="#FE5854"/>
+      <stop offset="1" stop-color="#FD3774"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="190" fill="none" stroke="url(#coral-gradient)" stroke-width="49"/>
+  <path d="M79 277c72-72 139-72 211 0 63 63 118 63 175 15" fill="none" stroke="#18B7A6" stroke-linecap="round" stroke-width="40"/>
+  <path d="M107 197c84 58 178 58 260 0 35-25 61-34 93-34" fill="none" stroke="url(#coral-gradient)" stroke-linecap="round" stroke-width="40"/>
+  <path d="M139 348c71 40 150 42 227 4" fill="none" stroke="#FD5D2A" stroke-linecap="round" stroke-width="31" opacity="0.82"/>
+</svg>

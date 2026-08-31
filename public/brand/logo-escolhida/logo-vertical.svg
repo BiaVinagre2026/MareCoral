@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" width="720" height="600">
+  <defs><linearGradient id="gv" x1="10" y1="20" x2="96" y2="84" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8A48"></stop><stop offset="0.55" stop-color="#FF5A3C"></stop><stop offset="1" stop-color="#F0417A"></stop>
+  </linearGradient></defs>
+  <g transform="translate(125,10)">
+  <path d="M14 34h44c9 0 14-7 12-13" stroke="url(#gv)" stroke-width="8" stroke-linecap="round" fill="none"></path>
+  <path d="M10 52h62c11 0 17-9 14-16" stroke="url(#gv)" stroke-width="9" stroke-linecap="round" fill="none"></path>
+  <path d="M20 70h40c9 0 14 7 12 13" stroke="url(#gv)" stroke-width="7.5" stroke-linecap="round" fill="none"></path>
+  <circle cx="86" cy="72" r="7" fill="url(#gv)"></circle></g>
+  <text x="180" y="185" text-anchor="middle" font-family="Archivo, Helvetica, Arial, sans-serif" font-weight="900" font-size="48" letter-spacing="-1.6" fill="#FF5A3C">Maré Coral</text>
+  <text x="180" y="212" text-anchor="middle" font-family="Archivo, Helvetica, Arial, sans-serif" font-weight="700" font-size="14" letter-spacing="6" fill="#FF7A45">FITWEAR</text>
+  <text x="180" y="252" text-anchor="middle" font-family="Archivo, Helvetica, Arial, sans-serif" font-weight="400" font-size="16" fill="#B3543F">Vista o treino. Sinta a maré.</text>
+</svg>

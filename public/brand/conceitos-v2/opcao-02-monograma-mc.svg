@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="600" viewBox="0 0 1120 600" role="img" aria-labelledby="title desc">
+  <title id="title">Maré Coral Fitwear — opção Monograma MC</title>
+  <desc id="desc">Logo horizontal transparente em coral e rosa com monograma MC fluido e a assinatura Vista o treino. Sinta a maré.</desc>
+  <defs>
+    <linearGradient id="mc-flow" x1="92" y1="110" x2="430" y2="438" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FD5D2A"/>
+      <stop offset="0.48" stop-color="#FD4B52"/>
+      <stop offset="1" stop-color="#FD3774"/>
+    </linearGradient>
+    <linearGradient id="mc-type" x1="474" y1="0" x2="1030" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FD5D2A"/>
+      <stop offset="1" stop-color="#FD3774"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M395 169c-31-48-75-72-132-72-92 0-166 75-166 168s74 168 166 168c56 0 100-22 132-65" stroke="url(#mc-flow)" stroke-width="26"/>
+    <path d="M139 340c25-128 61-188 108-188 49 0 58 153 96 153 23 0 39-37 54-84" stroke="url(#mc-flow)" stroke-width="30"/>
+    <path d="M129 360c56-43 112-43 168 0 43 33 83 39 121 18" stroke="#FD3774" stroke-width="17" opacity="0.78"/>
+    <circle cx="370" cy="121" r="18" fill="#FD5D2A" stroke="none"/>
+  </g>
+
+  <text x="476" y="246" fill="url(#mc-type)" font-family="Montserrat, Arial, sans-serif" font-size="104" font-weight="800" letter-spacing="-4">Maré Coral</text>
+  <text x="481" y="313" fill="#FD3774" font-family="Montserrat, Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="14">FITWEAR</text>
+  <path d="M480 350h522" stroke="url(#mc-type)" stroke-linecap="round" stroke-width="8"/>
+  <text x="481" y="409" fill="url(#mc-type)" font-family="Montserrat, Arial, sans-serif" font-size="27" font-weight="600">Vista o treino. Sinta a maré.</text>
+</svg>

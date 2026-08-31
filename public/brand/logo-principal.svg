@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="640" viewBox="0 0 720 640" role="img" aria-labelledby="title desc">
+  <title id="title">Maré Coral Fitwear</title>
+  <desc id="desc">Logo principal da Maré Coral Fitwear com símbolo de maré em coral e rosa.</desc>
+  <defs>
+    <linearGradient id="coral-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FD5D2A"/>
+      <stop offset="0.52" stop-color="#FE5854"/>
+      <stop offset="1" stop-color="#FD3774"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(220 38)">
+    <circle cx="140" cy="140" r="105" fill="none" stroke="url(#coral-gradient)" stroke-width="27"/>
+    <path d="M42 152c40-40 77-40 116 0 34 34 65 34 96 8" fill="none" stroke="#18B7A6" stroke-linecap="round" stroke-width="22"/>
+    <path d="M58 108c46 32 98 32 143 0 19-14 34-19 51-19" fill="none" stroke="url(#coral-gradient)" stroke-linecap="round" stroke-width="22"/>
+    <path d="M76 190c39 22 83 23 125 2" fill="none" stroke="#FD5D2A" stroke-linecap="round" stroke-width="17" opacity="0.82"/>
+  </g>
+  <text x="360" y="410" fill="#263238" font-family="Montserrat, Inter, Arial, sans-serif" font-size="92" font-weight="700" letter-spacing="-4" text-anchor="middle">Maré Coral</text>
+  <text x="360" y="472" fill="#FD3774" font-family="Montserrat, Inter, Arial, sans-serif" font-size="29" font-weight="700" letter-spacing="10" text-anchor="middle">FITWEAR</text>
+  <path d="M236 510h248" stroke="url(#coral-gradient)" stroke-linecap="round" stroke-width="8"/>
+  <text x="360" y="565" fill="#5D686D" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="500" text-anchor="middle">Vista o treino. Sinta a maré.</text>
+</svg>

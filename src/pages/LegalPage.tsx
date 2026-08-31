@@ -19,12 +19,12 @@ const content = {
   },
   exchanges: {
     title: 'Trocas e devoluções',
-    intro: 'Minuta operacional para validação com os processos da loja.',
+    intro: 'Minuta baseada no Código de Defesa do Consumidor e sujeita à validação operacional antes do lançamento.',
     sections: [
-      ['Arrependimento', 'Compras online poderão ser canceladas em até 7 dias corridos após o recebimento, conforme a legislação aplicável.'],
-      ['Condições da peça', 'A peça deverá ser devolvida sem sinais de uso, lavagem ou alteração, com etiquetas e acessórios originais.'],
-      ['Defeitos', 'Produtos com possível defeito serão analisados e tratados de acordo com os prazos e garantias legais.'],
-      ['Como solicitar', 'O canal e o passo a passo de troca serão publicados antes da abertura das vendas.'],
+      ['Direito de arrependimento', 'Compras feitas pelo site ou pelas redes sociais poderão ser canceladas em até 7 dias corridos após o recebimento. A cliente receberá orientação de devolução e, após a conferência, o valor integral será estornado pelo meio de pagamento original.'],
+      ['Troca por tamanho ou cor', 'Como política comercial, a solicitação poderá ser feita em até 30 dias corridos após o recebimento, sujeita à disponibilidade de estoque. A peça deverá estar sem sinais de uso, lavagem, odores ou alterações, com etiqueta e acessórios originais.'],
+      ['Produto com defeito', 'A solicitação será analisada conforme o Código de Defesa do Consumidor. Quando aplicável, o fornecedor terá até 30 dias para solucionar o problema; se isso não ocorrer, serão oferecidas as alternativas previstas em lei.'],
+      ['Como solicitar', 'A cliente poderá iniciar a solicitação pelo site, Instagram ou WhatsApp oficial, informando o número do pedido e o motivo. Os canais definitivos serão publicados antes da abertura das vendas.'],
     ],
   },
 }

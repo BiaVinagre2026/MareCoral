@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="720" viewBox="0 0 900 720" role="img" aria-labelledby="title desc">
+  <title id="title">Maré Coral Fitwear — opção Sol e Maré</title>
+  <desc id="desc">Logo transparente em coral e rosa com sol, ondas e a assinatura Vista o treino. Sinta a maré.</desc>
+  <defs>
+    <linearGradient id="sun-wave" x1="285" y1="85" x2="615" y2="355" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FD5D2A"/>
+      <stop offset="0.52" stop-color="#FD4C50"/>
+      <stop offset="1" stop-color="#FD3774"/>
+    </linearGradient>
+    <linearGradient id="word-wave" x1="235" y1="0" x2="675" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FD5D2A"/>
+      <stop offset="1" stop-color="#FD3774"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M351 229a104 104 0 1 1 198 0" stroke="url(#sun-wave)" stroke-width="25"/>
+    <path d="M285 245c48-50 101-50 153 0 49 47 98 47 147 0 11-11 21-19 30-24" stroke="url(#sun-wave)" stroke-width="27"/>
+    <path d="M315 300c40-36 82-36 124 0 40 35 80 35 120 0 10-9 19-15 27-19" stroke="url(#sun-wave)" stroke-width="18" opacity="0.78"/>
+  </g>
+
+  <text x="450" y="448" fill="url(#word-wave)" font-family="Montserrat, Arial, sans-serif" font-size="94" font-weight="800" letter-spacing="-4" text-anchor="middle">Maré Coral</text>
+  <text x="450" y="510" fill="#FD3774" font-family="Montserrat, Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="13" text-anchor="middle">FITWEAR</text>
+  <path d="M280 552c58-22 112-22 164 0 54 23 111 23 176-2" fill="none" stroke="url(#word-wave)" stroke-linecap="round" stroke-width="8"/>
+  <text x="450" y="615" fill="url(#word-wave)" font-family="Montserrat, Arial, sans-serif" font-size="27" font-weight="600" letter-spacing="0.5" text-anchor="middle">Vista o treino. Sinta a maré.</text>
+</svg>

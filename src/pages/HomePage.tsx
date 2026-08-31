@@ -8,6 +8,7 @@ import {
   Instagram,
   MapPin,
   Menu,
+  ShoppingBag,
   ShieldCheck,
   Sparkles,
   Sun,
@@ -17,6 +18,10 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import BrandMark from '../components/BrandMark.tsx'
+import { useCart } from '../context/CartContext.tsx'
+import { useCatalog } from '../context/CatalogContext.tsx'
+import { formatPrice, getFirstAvailableOption, getOptionStock } from '../data/products.ts'
+import { usePageMeta } from '../hooks/usePageMeta.ts'
 
 const collections = [
   { name: 'Maré Areia', use: 'Beach tennis & praia', icon: Sun, tone: 'orange' },
@@ -29,16 +34,26 @@ const neighborhoods = ['Camboinhas', 'Itaipu', 'Itacoatiara', 'Piratininga', 'Ma
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { itemCount, addItem, openCart } = useCart()
+  const { products, status, error, reload } = useCatalog()
   const whatsappUrl = import.meta.env.VITE_WHATSAPP_URL as string | undefined
+  const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL as string | undefined
+  const facebookUrl = import.meta.env.VITE_FACEBOOK_URL as string | undefined
+  const tiktokUrl = import.meta.env.VITE_TIKTOK_URL as string | undefined
+  usePageMeta({
+    title: 'Maré Coral Fitwear | Vista o treino. Sinta a maré.',
+    description: 'Fitwear coral e rosa para academia, beach tennis, corrida e crossfit, com envio para todo o Brasil.',
+    image: '/og-v1.png',
+  })
 
   const closeMenu = () => setMenuOpen(false)
 
   return (
     <div className="site-shell">
       <div className="announcement">
-        <span>Primeiro drop em preparação</span>
+        <span>Envio para todo o Brasil</span>
         <span className="announcement__dot" aria-hidden="true" />
-        <strong>Região Oceânica · Niterói</strong>
+        <strong>Postagem em até 2 dias úteis</strong>
       </div>
 
       <header className="site-header">
@@ -47,10 +62,12 @@ function HomePage() {
         </a>
 
         <nav className={`desktop-nav ${menuOpen ? 'desktop-nav--open' : ''}`} aria-label="Navegação principal">
-          <a href="#colecoes" onClick={closeMenu}>Coleções</a>
+          <a href="#loja" onClick={closeMenu}>Loja</a>
           <a href="#coral" onClick={closeMenu}>Conheça a Coral</a>
-          <a href="#entrega" onClick={closeMenu}>Entrega local</a>
-          <a href="#lista-vip" className="nav-cta" onClick={closeMenu}>Lista VIP</a>
+          <a href="#entrega" onClick={closeMenu}>Entrega</a>
+          <button type="button" className="nav-cta nav-cart" onClick={() => { closeMenu(); openCart() }}>
+            <ShoppingBag size={17} /> Sacola <span>{itemCount}</span>
+          </button>
         </nav>
 
         <button
@@ -69,20 +86,20 @@ function HomePage() {
           <div className="hero__wash hero__wash--one" aria-hidden="true" />
           <div className="hero__wash hero__wash--two" aria-hidden="true" />
           <div className="hero__content">
-            <p className="eyebrow"><Waves size={18} /> Corpo, praia e movimento</p>
-            <h1>Vista o treino.<br /><em>Sinta a maré.</em></h1>
+            <p className="eyebrow"><Waves size={18} /> Primeiro drop · em breve</p>
+            <h1>Seu treino encontrou<br /><em>a própria maré.</em></h1>
             <p className="hero__lead">
-              Fitwear com energia de praia, curadoria local e entrega rápida para acompanhar sua rotina — do treino à areia.
+              Fitwear coral e rosa para academia, beach tennis, corrida e crossfit. Compra direta, envio nacional e a Coral mostrando cada detalhe.
             </p>
             <div className="hero__actions">
-              <a className="button button--primary" href="#lista-vip">
-                Quero acesso ao primeiro drop <ArrowRight size={18} />
+              <a className="button button--primary" href="#loja">
+                Comprar o primeiro drop <ArrowRight size={18} />
               </a>
               <a className="button button--ghost" href="#colecoes">Explorar a Maré</a>
             </div>
             <div className="hero__trust">
               <span><BadgeCheck size={17} /> Curadoria local</span>
-              <span><Truck size={17} /> Entrega na Região Oceânica</span>
+              <span><Truck size={17} /> Envio para todo o Brasil</span>
             </div>
           </div>
 
@@ -98,6 +115,67 @@ function HomePage() {
             <div className="floating-tag floating-tag--top">Niterói · RJ</div>
             <div className="floating-tag floating-tag--bottom">movimento real</div>
           </div>
+        </section>
+
+        <section className="shop-preview" id="loja">
+          <div className="shop-preview__heading">
+            <div>
+              <p className="eyebrow">Coral de Largada · {status === 'connected' ? 'catálogo sincronizado' : status === 'loading' ? 'sincronizando catálogo' : 'catálogo demonstrativo'}</p>
+              <h2>Peças que acompanham o seu movimento.</h2>
+            </div>
+            <p>{status === 'connected'
+              ? `${products.length} ${products.length === 1 ? 'produto publicado' : 'produtos publicados'} no primeiro drop. Preço, imagens, cores, tamanhos e estoque vêm diretamente do painel Maré Coral.`
+              : 'A vitrine demonstrativa permanece disponível enquanto o catálogo do painel é sincronizado.'}</p>
+          </div>
+
+          {status === 'demo' && error && (
+            <div className="catalog-status" role="status">
+              <span>Exibindo o catálogo demonstrativo enquanto o Meu Mostruário é configurado.</span>
+              <button type="button" onClick={reload}>Tentar sincronizar</button>
+            </div>
+          )}
+
+          {status === 'connected' && products.length === 0 && (
+            <div className="catalog-status" role="status">
+              <span>O primeiro drop ainda não tem produtos publicados no painel.</span>
+            </div>
+          )}
+
+          <div className="product-grid">
+            {products.map((product) => {
+              const firstOption = getFirstAvailableOption(product)
+              const available = getOptionStock(product, firstOption.color, firstOption.size)
+              return <article className="product-card" key={product.id}>
+                <div className="product-card__image">
+                  {product.badge && <span className="product-card__badge">{product.badge}</span>}
+                  <Link to={`/produto/${product.slug}`} aria-label={`Ver ${product.name}`}>
+                    <img src={product.image} alt={`Coral apresentando ${product.name}`} style={{ objectPosition: product.imagePosition }} />
+                  </Link>
+                  <button
+                    type="button"
+                    className="product-card__quick-add"
+                    disabled={available <= 0}
+                    onClick={() => addItem({ productId: product.id, color: firstOption.color, size: firstOption.size })}
+                    aria-label={available > 0 ? `Adicionar ${product.name} à sacola` : `${product.name} esgotado`}
+                  >
+                    <ShoppingBag size={17} /> {available > 0 ? 'Adicionar' : 'Esgotado'}
+                  </button>
+                </div>
+                <div className="product-card__info">
+                  <p>{product.category} · {product.sport}</p>
+                  <h3><Link to={`/produto/${product.slug}`}>{product.name}</Link></h3>
+                  <div>
+                    <strong>{formatPrice(product.price)}</strong>
+                    <span>ou 3x de {formatPrice(product.price / 3)}</span>
+                  </div>
+                </div>
+              </article>
+            })}
+          </div>
+
+          <a className="shop-preview__all" href="#colecoes">
+            Encontrar sua modalidade <ArrowRight size={18} />
+          </a>
         </section>
 
         <section className="marquee" aria-label="Valores da marca">
@@ -150,7 +228,7 @@ function HomePage() {
             </article>
             <article>
               <span>02</span>
-              <div><h3>Entrega próxima</h3><p>Agilidade local para seu look não perder a próxima aula ou partida.</p></div>
+              <div><h3>Entrega próxima</h3><p>Postagem em até 2 dias úteis e acompanhamento do pedido.</p></div>
             </article>
             <article>
               <span>03</span>
@@ -190,10 +268,10 @@ function HomePage() {
           <div className="delivery__copy">
             <p className="eyebrow eyebrow--light"><MapPin size={18} /> De perto, do nosso jeito</p>
             <h2>Sua próxima peça pode chegar na próxima maré.</h2>
-            <p>Estamos estruturando entrega rápida para a Região Oceânica e envio para todo o Brasil.</p>
+            <p>Postamos em até 2 dias úteis e enviamos para todo o Brasil, com prazo e valor calculados no checkout.</p>
             <ul>
-              <li><Truck size={19} /> Entrega local expressa</li>
-              <li><Waves size={19} /> Retirada em ponto parceiro</li>
+              <li><Truck size={19} /> Envio nacional com rastreio</li>
+              <li><Waves size={19} /> Postagem em até 2 dias úteis</li>
               <li><ShieldCheck size={19} /> Troca simples e atendimento próximo</li>
             </ul>
           </div>
@@ -201,19 +279,19 @@ function HomePage() {
 
         <section className="vip-section" id="lista-vip">
           <div className="vip-section__glow" aria-hidden="true" />
-          <p className="eyebrow eyebrow--light">Primeiro drop · Coral de Largada</p>
-          <h2>Chegue antes da maré.</h2>
-          <p>Entre na lista VIP para receber tamanhos, cores e acesso antecipado ao primeiro drop.</p>
+          <p className="eyebrow eyebrow--light">Atendimento próximo</p>
+          <h2>Do feed para a sua sacola.</h2>
+          <p>Compre direto pelo site ou converse com a Maré Coral pelo Instagram e WhatsApp.</p>
           {whatsappUrl ? (
             <a className="button button--light" href={whatsappUrl} target="_blank" rel="noreferrer">
-              Entrar pelo WhatsApp <ArrowRight size={18} />
+              Falar pelo WhatsApp <ArrowRight size={18} />
             </a>
           ) : (
             <span className="button button--light button--disabled" title="Configure VITE_WHATSAPP_URL no arquivo .env">
               WhatsApp em configuração
             </span>
           )}
-          <small>Sem spam. Só novidades, drops e convite para experimentar.</small>
+          <small>Atendimento humano para medidas, entrega, troca e acompanhamento do pedido.</small>
         </section>
       </main>
 
@@ -227,7 +305,7 @@ function HomePage() {
             <strong>Maré Coral</strong>
             <a href="#colecoes">Coleções</a>
             <a href="#coral">Conheça a Coral</a>
-            <a href="#entrega">Entrega local</a>
+            <a href="#entrega">Entrega nacional</a>
           </div>
           <div>
             <strong>Informações</strong>
@@ -236,7 +314,9 @@ function HomePage() {
           </div>
           <div>
             <strong>Social</strong>
-            <span className="social-placeholder"><Instagram size={16} /> @marecoralfitwear</span>
+            {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={16} /> Instagram</a> : <span className="social-placeholder"><Instagram size={16} /> Instagram em configuração</span>}
+            {facebookUrl && <a href={facebookUrl} target="_blank" rel="noreferrer">Facebook</a>}
+            {tiktokUrl && <a href={tiktokUrl} target="_blank" rel="noreferrer">TikTok</a>}
           </div>
         </div>
         <div className="site-footer__bottom">

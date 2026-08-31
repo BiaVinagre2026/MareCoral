@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="720" viewBox="0 0 900 720" role="img" aria-labelledby="title desc">
+  <title id="title">Maré Coral Fitwear — opção Onda em Movimento</title>
+  <desc id="desc">Logo transparente em coral e rosa com uma letra M esportiva formada por ondas e a assinatura Vista o treino. Sinta a maré.</desc>
+  <defs>
+    <linearGradient id="motion" x1="250" y1="105" x2="655" y2="345" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FD5D2A"/>
+      <stop offset="0.5" stop-color="#FD4C50"/>
+      <stop offset="1" stop-color="#FD3774"/>
+    </linearGradient>
+    <linearGradient id="motion-type" x1="205" y1="0" x2="695" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FD3774"/>
+      <stop offset="1" stop-color="#FD5D2A"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M247 294c37-127 79-190 127-190 58 0 63 181 116 181 47 0 62-140 115-140 25 0 47 27 66 80" stroke="url(#motion)" stroke-width="32"/>
+    <path d="M240 306c68 67 143 70 226 9 79-59 148-70 207-34" stroke="#FD3774" stroke-width="21" opacity="0.86"/>
+    <path d="M281 351c61 38 121 38 181 0 59-37 115-39 169-6" stroke="#FD5D2A" stroke-width="12" opacity="0.72"/>
+    <circle cx="618" cy="106" r="25" fill="url(#motion)" stroke="none"/>
+  </g>
+
+  <text x="450" y="472" fill="url(#motion-type)" font-family="Montserrat, Arial, sans-serif" font-size="96" font-style="italic" font-weight="900" letter-spacing="-5" text-anchor="middle">Maré Coral</text>
+  <text x="450" y="532" fill="#FD5D2A" font-family="Montserrat, Arial, sans-serif" font-size="27" font-style="italic" font-weight="800" letter-spacing="14" text-anchor="middle">FITWEAR</text>
+  <path d="M277 567c79 20 156 20 231 0 48-13 88-13 120-1" fill="none" stroke="url(#motion-type)" stroke-linecap="round" stroke-width="8"/>
+  <text x="450" y="626" fill="url(#motion-type)" font-family="Montserrat, Arial, sans-serif" font-size="27" font-weight="600" text-anchor="middle">Vista o treino. Sinta a maré.</text>
+</svg>

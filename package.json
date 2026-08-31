@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "validate:catalog": "node scripts/validate-catalog-integration.mjs",
+    "generate:feeds": "node scripts/generate-social-feeds.mjs",
+    "build": "npm run generate:feeds && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
