@@ -35,6 +35,14 @@ As portas ficam vinculadas somente a `127.0.0.1` e não expõem o projeto na red
 
 Na configuração local atual, a prévia Docker está em `http://127.0.0.1:4311`, pois a 4310 já estava ocupada e foi preservada.
 
+No Docker Desktop, os projetos ficam separados por responsabilidade:
+
+- `meumostruario`: backend compartilhado, PostgreSQL e Redis;
+- `befit`: frontend da loja atacadista;
+- `marecoral`: frontend da loja varejista Maré Coral.
+
+A Maré Coral não cria cópias da API, do banco ou do Redis. O container `marecoral-web` encaminha as operações da loja para o backend compartilhado na porta 8000.
+
 ## Rodar no Windows com Docker Desktop
 
 No PowerShell:
