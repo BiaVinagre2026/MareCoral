@@ -68,6 +68,7 @@ export function getOptionPrice(product: Product, color: string, size: string) {
 
 export function getColorImage(product: Product, color: string) {
   return product.variants?.find((variant) => variant.color === color && variant.image)?.image
+    || product.imagesByColor?.[color]?.[0]
 }
 
 export function colorHasStock(product: Product, color: string) {

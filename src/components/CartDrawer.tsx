@@ -2,7 +2,7 @@ import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext.tsx'
 import { useCatalog } from '../context/CatalogContext.tsx'
-import { formatPrice, getOptionPrice, getOptionStock } from '../data/products.ts'
+import { formatPrice, getColorImage, getOptionPrice, getOptionStock } from '../data/products.ts'
 
 function CartDrawer() {
   const { lines, subtotal, isOpen, closeCart, updateQuantity, removeItem } = useCart()
@@ -32,9 +32,10 @@ function CartDrawer() {
                 const identity = { productId: line.productId, color: line.color, size: line.size }
                 const available = getOptionStock(product, line.color, line.size)
                 const unitPrice = getOptionPrice(product, line.color, line.size)
+                const image = getColorImage(product, line.color) || product.image
                 return (
                   <article className="cart-line" key={`${line.productId}-${line.color}-${line.size}`}>
-                    <img src={product.image} alt="" style={{ objectPosition: product.imagePosition }} />
+                    <img src={image} alt="" style={{ objectPosition: product.imagePosition }} />
                     <div className="cart-line__copy">
                       <strong>{product.name}</strong>
                       <span>{line.color} · {line.size}</span>

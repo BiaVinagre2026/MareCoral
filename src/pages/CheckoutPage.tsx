@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import StoreHeader from '../components/StoreHeader.tsx'
 import { useCart } from '../context/CartContext.tsx'
 import { useCatalog } from '../context/CatalogContext.tsx'
-import { formatPrice, getOptionPrice } from '../data/products.ts'
+import { formatPrice, getColorImage, getOptionPrice } from '../data/products.ts'
 import { usePageMeta } from '../hooks/usePageMeta.ts'
 import { checkoutEnabled, createCheckoutSession, quoteShipping, type ShippingQuote } from '../services/paymentGateway.ts'
 
@@ -165,7 +165,8 @@ function CheckoutPage() {
               <div className="order-summary__title"><h2>Resumo</h2><button type="button" onClick={openCart}>Editar sacola</button></div>
               {lines.map((line) => {
                 const product = products.find((candidate) => candidate.id === line.productId)
-                return product ? <article key={`${line.productId}-${line.color}-${line.size}`}><img src={product.image} alt="" style={{ objectPosition: product.imagePosition }} /><div><strong>{product.name}</strong><span>{line.color} · {line.size} · Qtd. {line.quantity}</span></div><b>{formatPrice(getOptionPrice(product, line.color, line.size) * line.quantity)}</b></article> : null
+                const image = product ? getColorImage(product, line.color) || product.image : ''
+                return product ? <article key={`${line.productId}-${line.color}-${line.size}`}><img src={image} alt="" style={{ objectPosition: product.imagePosition }} /><div><strong>{product.name}</strong><span>{line.color} · {line.size} · Qtd. {line.quantity}</span></div><b>{formatPrice(getOptionPrice(product, line.color, line.size) * line.quantity)}</b></article> : null
               })}
               <div className="order-summary__totals"><p><span>Subtotal</span><strong>{formatPrice(subtotal)}</strong></p><p><span>Frete</span><strong>{activeQuote ? activeQuote.configured ? formatPrice(activeQuote.amount) : 'A combinar' : 'Informe o CEP'}</strong></p><div><span>{activeQuote?.configured ? 'Total' : 'Total parcial'}</span><strong>{formatPrice(subtotal + (activeQuote?.configured ? activeQuote.amount : 0))}</strong></div></div>
               {instagramUrl && <a className="social-checkout" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18} /> Prefere atendimento pelo Instagram?</a>}
