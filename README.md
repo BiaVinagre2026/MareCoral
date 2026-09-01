@@ -14,6 +14,14 @@ Projeto da loja própria da Maré Coral, criado a partir da base white-label do 
 
 O frontend visual veio da base CCNF. Catálogo, variantes, estoque cadastrado e pedidos agora usam o backend white-label do Meu Mostruário.
 
+## Limites entre os projetos
+
+- **Maré Coral / Fitness Oceânica:** frontend varejista, catálogo apresentado à cliente, carrinho e checkout.
+- **Meu Mostruário:** backend compartilhado multitenant e super admin global. A Maré Coral utiliza somente o tenant isolado `mare-coral` dessa infraestrutura.
+- **BEFIT:** frontend atacadista do ecossistema Meu Mostruário; não faz parte do projeto Maré Coral.
+
+O super admin global não é uma tela do site Maré Coral e seu código não pertence a este repositório. A integração entre os projetos acontece exclusivamente pela API do backend compartilhado.
+
 ## Portas isoladas
 
 | Ambiente | Endereço | Porta padrão |
@@ -57,9 +65,11 @@ Acesse http://localhost:4312. Para encerrar:
 docker compose -f docker-compose.prod.yml down
 ```
 
-## Backend Meu Mostruário
+## Backend compartilhado Meu Mostruário
 
 Para desenvolvimento, o backend deve estar ativo em `http://127.0.0.1:8000`. O Vite e o Nginx encaminham `/api`, `/uploads` e `/rails` para ele; o navegador não precisa abrir outra origem.
+
+Esse endereço é uma API, não uma página para acesso da cliente. Produtos, estoque, pedidos e configurações do tenant são operados separadamente no super admin global do Meu Mostruário.
 
 Variáveis principais:
 

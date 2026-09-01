@@ -124,20 +124,20 @@ function HomePage() {
               <h2>Peças que acompanham o seu movimento.</h2>
             </div>
             <p>{status === 'connected'
-              ? `${products.length} ${products.length === 1 ? 'produto publicado' : 'produtos publicados'} no primeiro drop. Preço, imagens, cores, tamanhos e estoque vêm diretamente do painel Maré Coral.`
-              : 'A vitrine demonstrativa permanece disponível enquanto o catálogo do painel é sincronizado.'}</p>
+              ? `${products.length} ${products.length === 1 ? 'produto publicado' : 'produtos publicados'} no primeiro drop. Preço, imagens, cores, tamanhos e estoque vêm diretamente do catálogo Maré Coral.`
+              : 'A vitrine demonstrativa permanece disponível enquanto o catálogo Maré Coral é sincronizado.'}</p>
           </div>
 
           {status === 'demo' && error && (
             <div className="catalog-status" role="status">
-              <span>Exibindo o catálogo demonstrativo enquanto o Meu Mostruário é configurado.</span>
+              <span>Exibindo o catálogo demonstrativo enquanto o catálogo Maré Coral é preparado.</span>
               <button type="button" onClick={reload}>Tentar sincronizar</button>
             </div>
           )}
 
           {status === 'connected' && products.length === 0 && (
             <div className="catalog-status" role="status">
-              <span>O primeiro drop ainda não tem produtos publicados no painel.</span>
+              <span>O primeiro drop ainda não tem produtos publicados.</span>
             </div>
           )}
 

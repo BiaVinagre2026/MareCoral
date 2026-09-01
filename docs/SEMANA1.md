@@ -26,6 +26,8 @@ Atualizado em: 26/08/2026
 
 ## Backend e loja — estado atual
 
+O site e o checkout pertencem à Maré Coral / Fitness Oceânica. O backend multitenant e o super admin global pertencem ao Meu Mostruário. O frontend atacadista do Meu Mostruário será a BEFIT e não faz parte deste projeto.
+
 - [x] Backend Meu Mostruário ativo em `127.0.0.1:8000`.
 - [x] Tenant/schema isolado `mare-coral` provisionado.
 - [x] Oito produtos de preparação cadastrados com variantes e estoque.
@@ -33,8 +35,9 @@ Atualizado em: 26/08/2026
 - [x] Pedido criado pelo link autorizado sem confiar em preço vindo do navegador.
 - [x] Teste técnico de pedido concluído e pedido de teste cancelado.
 - [ ] Cadastrar credenciais do gateway próprio e habilitar cobrança.
-- [ ] Validar e reservar estoque no servidor durante o pedido.
-- [ ] Estruturar endereço, calcular frete e armazenar rastreio.
+- [x] Validar e reservar estoque no servidor durante o pedido.
+- [x] Estruturar endereço e preparar a configuração de frete por tenant.
+- [ ] Integrar cálculo/rastreio da transportadora escolhida.
 - [ ] Substituir produtos e fotos de preparação pelos dados finais do drop.
 
 ## Prioridade oficial da fase visual

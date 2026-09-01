@@ -11,13 +11,21 @@
 - reaproveitamento das páginas existentes no Instagram e Facebook;
 - CNPJ, CNAE e dados fiscais entram antes da abertura real das vendas.
 
+## Limites entre os projetos
+
+- **Maré Coral / Fitness Oceânica:** site varejista, experiência da cliente, carrinho e checkout.
+- **Meu Mostruário:** backend compartilhado white-label multitenant e super admin global usado para operar o tenant `mare-coral`.
+- **BEFIT:** frontend atacadista do Meu Mostruário, sem compartilhamento de interface com a Maré Coral.
+
+O super admin global permanece no projeto Meu Mostruário. Ele não é parte do site Maré Coral, não é publicado por este repositório e não deve aparecer como uma área da loja para a cliente.
+
 ## Arquitetura da primeira versão
 
 1. O backend Meu Mostruário é a fonte de verdade para produtos, preços publicados, variantes e estoque cadastrado do tenant `mare-coral`.
 2. O carrinho persiste apenas no dispositivo da cliente até o pedido ser criado.
 3. O navegador usa o proxy de mesma origem e envia o pedido ao endpoint varejista exclusivo da Maré Coral.
 4. O navegador não envia preço, desconto nem total; o backend cria o snapshot financeiro.
-5. O endereço de entrega é registrado em campos estruturados dentro do pedido e aparece no painel administrativo.
+5. O endereço de entrega é registrado em campos estruturados dentro do pedido e fica disponível ao super admin global do backend.
 6. O gateway próprio e os webhooks já possuem pontos de integração no backend, mas as credenciais do tenant ainda não foram cadastradas.
 7. `src/data/catalog.json` é somente fallback de desenvolvimento e fonte provisória dos feeds sociais.
 8. Nenhuma chave, segredo, custo ou margem é enviada ao front-end.
@@ -46,15 +54,15 @@
 - catálogo, variação e preço são validados novamente pelo servidor;
 - o pedido reserva o estoque em uma transação e registra o endereço estruturado;
 - confirmação ou pagamento mantém a baixa; cancelamento devolve as unidades;
-- o painel do pedido mostra cliente, endereço, frete, total e situação do estoque;
-- a aba `Configurações > Entrega` permite definir frete nacional fixo, limite de frete grátis e prazo;
+- o super admin global pode consultar cliente, endereço, frete, total e situação do estoque;
+- a configuração compartilhada do tenant permite definir frete nacional fixo, limite de frete grátis e prazo;
 - enquanto o frete não estiver configurado, o pedido pode ser registrado com `Frete a combinar`, mas a cobrança online fica bloqueada;
 - o fluxo é exclusivo do tenant e do link varejista marcados como Maré Coral, sem mudar os pedidos atacadistas de outros clientes.
 
 ### Limites antes de vender
 
 - o fluxo atual reaproveita um link de comprador do backend; por isso, no tenant Maré Coral, `price_wholesale` e `price_retail` estão iguais durante a prova de conceito;
-- a regra de frete ainda precisa receber o valor comercial aprovado e ser ativada no painel;
+- a regra de frete ainda precisa receber o valor comercial aprovado e ser ativada no tenant pelo super admin global;
 - pagamento, webhook, recusa, cancelamento e estorno ainda precisam ser homologados no sandbox do gateway.
 
 ## Dados que faltam para o gateway

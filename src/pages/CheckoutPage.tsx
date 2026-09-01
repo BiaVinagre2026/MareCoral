@@ -55,7 +55,7 @@ function CheckoutPage() {
       setQuotedPostalCode(postalCode)
       setShippingNotice(quote.configured
         ? `${quote.method}${quote.estimatedDays ? ` · prazo estimado de ${quote.estimatedDays} dias úteis` : ''}.`
-        : 'A regra de frete ainda será definida no painel. O pedido pode ser registrado sem cobrança.')
+        : 'A regra de frete ainda está sendo configurada. O pedido pode ser registrado sem cobrança.')
     } catch (error) {
       setShippingNotice(error instanceof Error ? error.message : 'Não foi possível calcular o frete.')
     } finally {
