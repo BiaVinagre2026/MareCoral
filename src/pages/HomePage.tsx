@@ -120,24 +120,24 @@ function HomePage() {
         <section className="shop-preview" id="loja">
           <div className="shop-preview__heading">
             <div>
-              <p className="eyebrow">Coral de Largada · {status === 'connected' ? 'catálogo sincronizado' : status === 'loading' ? 'sincronizando catálogo' : 'catálogo demonstrativo'}</p>
+              <p className="eyebrow">Coral de Largada · {status === 'connected' ? 'loja atualizada' : status === 'loading' ? 'atualizando produtos' : 'coleção de apresentação'}</p>
               <h2>Peças que acompanham o seu movimento.</h2>
             </div>
             <p>{status === 'connected'
-              ? `${products.length} ${products.length === 1 ? 'produto publicado' : 'produtos publicados'} no primeiro drop. Preço, imagens, cores, tamanhos e estoque vêm diretamente do catálogo Maré Coral.`
-              : 'A vitrine demonstrativa permanece disponível enquanto o catálogo Maré Coral é sincronizado.'}</p>
+              ? `${products.length} ${products.length === 1 ? 'peça disponível' : 'peças disponíveis'} no primeiro drop. Confira cores, tamanhos e disponibilidade em cada produto.`
+              : 'Uma seleção inicial para você conhecer o estilo e a energia da Maré Coral.'}</p>
           </div>
 
           {status === 'demo' && error && (
             <div className="catalog-status" role="status">
-              <span>Exibindo o catálogo demonstrativo enquanto o catálogo Maré Coral é preparado.</span>
-              <button type="button" onClick={reload}>Tentar sincronizar</button>
+              <span>Estamos atualizando a loja. Enquanto isso, conheça nossa coleção de apresentação.</span>
+              <button type="button" onClick={reload}>Atualizar loja</button>
             </div>
           )}
 
           {status === 'connected' && products.length === 0 && (
             <div className="catalog-status" role="status">
-              <span>O primeiro drop ainda não tem produtos publicados.</span>
+              <span>O primeiro drop está chegando. Novas peças serão publicadas em breve.</span>
             </div>
           )}
 
@@ -218,7 +218,7 @@ function HomePage() {
             <p className="eyebrow eyebrow--light">Nosso jeito de fazer</p>
             <h2>Moda ativa com<br />alma de praia.</h2>
             <p>
-              A Maré Coral nasce perto de quem vai vestir. Menos catálogo infinito, mais escolha com propósito, caimento e conversa de verdade.
+              A Maré Coral nasce perto de quem vai vestir. Menos excesso, mais escolha com propósito, caimento e conversa de verdade.
             </p>
           </div>
           <div className="manifesto__pillars">

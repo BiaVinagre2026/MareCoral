@@ -70,7 +70,7 @@ function checkoutItems(payload: Pick<CheckoutPayload, 'lines' | 'products'>) {
     const product = payload.products.find((candidate) => candidate.id === line.productId)
     const variant = product && getProductVariant(product, line.color, line.size)
     if (!product?.backendProductId || !product.catalogItemId || !variant?.id) {
-      throw new Error('Atualize a página: há uma peça fora de sincronia com o catálogo.')
+      throw new Error('Atualize a página: a disponibilidade de uma das peças mudou.')
     }
     return {
       product_id: product.backendProductId,
@@ -140,7 +140,7 @@ export async function createCheckoutSession(payload: CheckoutPayload): Promise<C
     return {
       status: 'payment_failed',
       orderId: body.order.id,
-      message: body.payment.error_message || `O pedido ${body.order.id} foi salvo, mas o gateway não abriu a cobrança.`,
+      message: body.payment.error_message || `O pedido ${body.order.id} foi salvo, mas o pagamento não pôde ser iniciado.`,
       shipping: shippingFromOrder(body.order),
     }
   }

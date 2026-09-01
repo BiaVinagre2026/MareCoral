@@ -40,7 +40,7 @@ function CatalogProvider({ children }: { children: ReactNode }) {
       })
       .catch((reason: unknown) => {
         if (!active) return
-        setError(reason instanceof Error ? reason.message : 'Não foi possível sincronizar o catálogo.')
+        setError(reason instanceof Error ? reason.message : 'Não foi possível atualizar os produtos da loja.')
         setStatus(allowDemoCatalog ? 'demo' : 'error')
       })
 

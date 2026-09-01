@@ -49,7 +49,7 @@ function ProductPage() {
   })
 
   if (!product && status === 'loading') {
-    return <div className="store-page"><StoreHeader /><main className="not-found"><h1>Sincronizando o catálogo…</h1></main></div>
+    return <div className="store-page"><StoreHeader /><main className="not-found"><h1>Carregando a peça…</h1></main></div>
   }
 
   if (!product) {
@@ -123,7 +123,7 @@ function ProductPage() {
             <ul className="product-assurances">
               <li><PackageCheck /><span><strong>Postagem rápida</strong>Em até 2 dias úteis</span></li>
               <li><Truck /><span><strong>Todo o Brasil</strong>Frete calculado no checkout</span></li>
-              <li><ShieldCheck /><span><strong>Compra segura</strong>Gateway conectado no lançamento</span></li>
+              <li><ShieldCheck /><span><strong>Compra segura</strong>Seus dados protegidos</span></li>
             </ul>
 
             <div className="product-specs">

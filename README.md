@@ -16,11 +16,13 @@ O frontend visual veio da base CCNF. Catálogo, variantes, estoque cadastrado e 
 
 ## Limites entre os projetos
 
-- **Maré Coral / Fitness Oceânica:** frontend varejista, catálogo apresentado à cliente, carrinho e checkout.
+- **Maré Coral / Fitness Oceânica:** loja varejista, vitrine, páginas de produto, sacola e checkout.
 - **Meu Mostruário:** backend compartilhado multitenant e super admin global. A Maré Coral utiliza somente o tenant isolado `mare-coral` dessa infraestrutura.
 - **BEFIT:** frontend atacadista do ecossistema Meu Mostruário; não faz parte do projeto Maré Coral.
 
 O super admin global não é uma tela do site Maré Coral e seu código não pertence a este repositório. A integração entre os projetos acontece exclusivamente pela API do backend compartilhado.
+
+Para a cliente, a Maré Coral funciona como uma loja virtual comum. O termo `catálogo` é usado somente na integração técnica com o backend e não deve aparecer na experiência de compra.
 
 ## Portas isoladas
 

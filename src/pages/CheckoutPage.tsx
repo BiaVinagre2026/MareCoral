@@ -81,7 +81,7 @@ function CheckoutPage() {
         products,
       })
       if (result.status === 'configuration_required') {
-        setNotice('Checkout validado. A conexão com o seu gateway será ativada quando recebermos a documentação e as credenciais de teste.')
+        setNotice('As vendas online ainda não foram abertas. Em breve você poderá concluir sua compra por aqui.')
       } else {
         if (result.status === 'redirect') {
           clearCart()
@@ -114,7 +114,7 @@ function CheckoutPage() {
       <StoreHeader />
       <main className="checkout-page">
         <Link className="checkout-back" to="/"><ArrowLeft size={16} /> Continuar comprando</Link>
-        <div className="checkout-heading"><p className="eyebrow"><LockKeyhole size={17} /> Ambiente de projeto</p><h1>Finalize sua compra.</h1><p>O fluxo está pronto para receber o gateway próprio sem expor credenciais no navegador.</p></div>
+        <div className="checkout-heading"><p className="eyebrow"><LockKeyhole size={17} /> Compra segura</p><h1>Finalize sua compra.</h1><p>Revise seus dados, a entrega e o pedido antes de concluir.</p></div>
 
         {lines.length === 0 ? completedOrderId ? (
           <section className="checkout-empty checkout-success">
@@ -150,11 +150,11 @@ function CheckoutPage() {
                 <div className="form-row"><label>Bairro<input {...register('neighborhood', { required: true })} /></label><label>Cidade<input {...register('city', { required: true })} autoComplete="address-level2" /></label></div>
               </section>
               <section className="checkout-payment">
-                <span>3</span><div><h2>Pagamento</h2><p>O gateway próprio será aberto com o pedido validado pelo servidor.</p></div>
-                <div className="gateway-placeholder"><LockKeyhole /><div><strong>Gateway Maré Coral</strong><p>{checkoutEnabled && allowOrder ? (allowPayment ? 'Catálogo e pagamento conectados ao Meu Mostruário.' : 'Pedido conectado; cobrança ainda desabilitada no backend.') : catalogStatus === 'connected' ? 'Catálogo conectado; aguardando habilitar o link de pedidos.' : 'Aguardando sincronização com o Meu Mostruário.'}</p></div></div>
+                <span>3</span><div><h2>Pagamento</h2><p>Confira abaixo a disponibilidade do pagamento para o seu pedido.</p></div>
+                <div className="gateway-placeholder"><LockKeyhole /><div><strong>Pagamento seguro</strong><p>{checkoutEnabled && allowOrder ? (allowPayment ? 'Pagamento online disponível para este pedido.' : 'Seu pedido será registrado; o pagamento online estará disponível em breve.') : catalogStatus === 'connected' ? 'Estamos finalizando a abertura das vendas.' : 'Estamos atualizando a disponibilidade das peças.'}</p></div></div>
                 <label className="terms-check"><input type="checkbox" {...register('terms', { required: true })} /><span>Li e concordo com a <Link to="/politica-de-privacidade">política de privacidade</Link> e as <Link to="/trocas-e-devolucoes">regras de troca</Link>.</span></label>
                 {errors.terms && <small>Confirme as políticas para continuar.</small>}
-                <button className="button button--primary" type="submit" disabled={isSubmitting || (allowPayment && !activeQuote?.configured)}>{isSubmitting ? 'Preparando…' : checkoutEnabled ? allowPayment ? 'Ir para o pagamento' : 'Finalizar pedido' : 'Validar checkout'}</button>
+                <button className="button button--primary" type="submit" disabled={isSubmitting || !checkoutEnabled || !allowOrder || (allowPayment && !activeQuote?.configured)}>{isSubmitting ? 'Preparando…' : checkoutEnabled && allowOrder ? allowPayment ? 'Ir para o pagamento' : 'Finalizar pedido' : 'Vendas em breve'}</button>
                 {allowPayment && !activeQuote?.configured && <small>Calcule o frete antes de seguir para o pagamento.</small>}
                 {notice && <div className="checkout-notice"><CheckCircle2 />{notice}</div>}
                 {pixCode && <label className="pix-code">PIX copia e cola<textarea value={pixCode} readOnly rows={4} onFocus={(event) => event.currentTarget.select()} /></label>}

@@ -13,11 +13,13 @@
 
 ## Limites entre os projetos
 
-- **Maré Coral / Fitness Oceânica:** site varejista, experiência da cliente, carrinho e checkout.
+- **Maré Coral / Fitness Oceânica:** loja varejista, vitrine, páginas de produto, sacola e checkout.
 - **Meu Mostruário:** backend compartilhado white-label multitenant e super admin global usado para operar o tenant `mare-coral`.
 - **BEFIT:** frontend atacadista do Meu Mostruário, sem compartilhamento de interface com a Maré Coral.
 
 O super admin global permanece no projeto Meu Mostruário. Ele não é parte do site Maré Coral, não é publicado por este repositório e não deve aparecer como uma área da loja para a cliente.
+
+Na experiência da cliente, a Maré Coral deve se comportar e se comunicar como uma loja virtual comum. `Catálogo` é apenas o nome técnico da estrutura usada pelo backend compartilhado.
 
 ## Arquitetura da primeira versão
 
