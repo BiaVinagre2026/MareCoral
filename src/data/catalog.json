@@ -25,8 +25,20 @@
     "sport": "Beach tennis",
     "description": "Sustentação média, toque macio e desenho assimétrico para treinar com liberdade.",
     "price": 139.9,
-    "image": "/images/coral/coral-real-identidade-v2.png",
-    "imagePosition": "8% 42%",
+    "image": "/images/coral/looks/look-rosa-coral-real-4x5-v2.png",
+    "images": [
+      "/images/coral/looks/look-rosa-coral-real-4x5-v2.png",
+      "/images/products/top-onda-um-ombro/top-onda-costas-v1.png",
+      "/images/products/top-onda-um-ombro/top-onda-detalhe-v1.png",
+      "/images/products/top-onda-um-ombro/top-onda-tecido-v1.png"
+    ],
+    "imageLabels": {
+      "/images/coral/looks/look-rosa-coral-real-4x5-v2.png": "Frente",
+      "/images/products/top-onda-um-ombro/top-onda-costas-v1.png": "Costas",
+      "/images/products/top-onda-um-ombro/top-onda-detalhe-v1.png": "Detalhe",
+      "/images/products/top-onda-um-ombro/top-onda-tecido-v1.png": "Tecido"
+    },
+    "imagePosition": "50% 38%",
     "colors": ["Rosa", "Coral"],
     "sizes": ["P", "M", "G"],
     "stock": 12,
@@ -42,8 +54,20 @@
     "sport": "Corrida",
     "description": "Cintura alta, compressão confortável e bolso lateral para acompanhar sua rotina.",
     "price": 189.9,
-    "image": "/images/coral/looks/look-rosa-coral-real-9x16-v2.png",
-    "imagePosition": "50% 57%",
+    "image": "/images/products/legging-mare-alta/legging-mare-alta-frente-v1.png",
+    "images": [
+      "/images/products/legging-mare-alta/legging-mare-alta-frente-v1.png",
+      "/images/products/legging-mare-alta/legging-mare-alta-costas-v1.png",
+      "/images/products/legging-mare-alta/legging-mare-alta-detalhe-v1.png",
+      "/images/products/legging-mare-alta/legging-mare-alta-tecido-v1.png"
+    ],
+    "imageLabels": {
+      "/images/products/legging-mare-alta/legging-mare-alta-frente-v1.png": "Frente",
+      "/images/products/legging-mare-alta/legging-mare-alta-costas-v1.png": "Costas",
+      "/images/products/legging-mare-alta/legging-mare-alta-detalhe-v1.png": "Detalhe",
+      "/images/products/legging-mare-alta/legging-mare-alta-tecido-v1.png": "Tecido"
+    },
+    "imagePosition": "50% 45%",
     "colors": ["Rosa", "Coral"],
     "sizes": ["P", "M", "G", "GG"],
     "stock": 21,
