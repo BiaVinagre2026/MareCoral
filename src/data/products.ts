@@ -24,6 +24,7 @@ export type Product = {
   image: string
   imagePosition?: string
   images?: string[]
+  imagesByColor?: Record<string, string[]>
   imageLabels?: Record<string, string>
   colors: string[]
   colorHexByName?: Record<string, string>

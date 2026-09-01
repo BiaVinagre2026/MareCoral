@@ -133,16 +133,25 @@ function mapProduct(product: ApiProduct, catalogItemId?: number): Product {
       price: Number.isFinite(override) && override > 0 ? override : undefined,
     }]
   })
-  const productGallery = (product.images || [])
+  const imageEntries = (product.images || [])
     .slice()
     .sort((left, right) => (left.position || 0) - (right.position || 0))
-    .map(preferredImage)
-    .filter(Boolean)
-  const imageLabels = (product.images || []).reduce<Record<string, string>>((labels, image) => {
-    const url = preferredImage(image)
-    if (url && image.alt_text?.trim()) labels[url] = image.alt_text.trim()
-    return labels
-  }, {})
+    .map((image) => ({ image, url: preferredImage(image) }))
+    .filter((entry): entry is { image: ApiImage; url: string } => Boolean(entry.url))
+  const productGallery = imageEntries.map((entry) => entry.url)
+  const imageLabels: Record<string, string> = {}
+  const imagesByColor: Record<string, string[]> = {}
+  // Legacy images without a color prefix belong to the first product color.
+  imageEntries.forEach(({ image, url }) => {
+    const rawLabel = image.alt_text?.trim() || ''
+    const color = colors.find((candidate) => rawLabel.toLocaleLowerCase('pt-BR').startsWith(`${candidate.toLocaleLowerCase('pt-BR')} · `))
+      || colors[0]
+    const label = color && rawLabel.toLocaleLowerCase('pt-BR').startsWith(`${color.toLocaleLowerCase('pt-BR')} · `)
+      ? rawLabel.slice(`${color} · `.length).trim()
+      : rawLabel
+    if (label) imageLabels[url] = label
+    if (color) (imagesByColor[color] ||= []).push(url)
+  })
   const variantGallery = storefrontVariants.map((variant) => variant.image).filter(Boolean) as string[]
   const gallery = Array.from(new Set([...productGallery, ...variantGallery]))
   const cover = preferredImage(product.cover_image) || gallery[0] || '/images/coral-avatar.jpeg'
@@ -160,6 +169,7 @@ function mapProduct(product: ApiProduct, catalogItemId?: number): Product {
     price: Number.isFinite(price) ? price : 0,
     image: cover,
     images: gallery.length ? gallery : [cover],
+    imagesByColor,
     imageLabels,
     colors: colors.length ? colors : ['Coral'],
     colorHexByName,

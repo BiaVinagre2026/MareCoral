@@ -38,9 +38,16 @@ function ProductPage() {
   const selectedStock = product ? getOptionStock(product, selectedColor, selectedSize) : 0
   const selectedPrice = product ? getOptionPrice(product, selectedColor, selectedSize) : 0
   const selectedColorImage = product ? getColorImage(product, selectedColor) : undefined
-  const activeImage = product?.images?.includes(imageChoice) || imageChoice === '/images/coral/coral-real-identidade-v2.png'
+  const gallery = product?.imagesByColor?.[selectedColor]?.length
+    ? product.imagesByColor[selectedColor]
+    : product?.images?.length
+      ? product.images
+      : product
+        ? [product.image]
+        : []
+  const activeImage = gallery.includes(imageChoice) || imageChoice === '/images/coral/coral-real-identidade-v2.png'
     ? imageChoice
-    : selectedColorImage || product?.image || ''
+    : selectedColorImage || gallery[0] || product?.image || ''
   const related = products.filter((candidate) => candidate.id !== product?.id).slice(0, 3)
   usePageMeta({
     title: product ? `${product.name} | Maré Coral Fitwear` : 'Produto não encontrado | Maré Coral',
@@ -59,7 +66,6 @@ function ProductPage() {
   }
 
   const labels = ['Frente', 'Costas', 'Detalhe', 'Tecido']
-  const gallery = product.images?.length ? product.images : [product.image]
   const media = labels.map((label, index) => ({
     label: product.imageLabels?.[gallery[index]] || label,
     image: gallery[index] || (index === 2 ? '/images/coral/coral-real-identidade-v2.png' : null),

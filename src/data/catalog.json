@@ -32,11 +32,29 @@
       "/images/products/top-onda-um-ombro/top-onda-detalhe-v1.png",
       "/images/products/top-onda-um-ombro/top-onda-tecido-v1.png"
     ],
+    "imagesByColor": {
+      "Rosa": [
+        "/images/coral/looks/look-rosa-coral-real-4x5-v2.png",
+        "/images/products/top-onda-um-ombro/top-onda-costas-v1.png",
+        "/images/products/top-onda-um-ombro/top-onda-detalhe-v1.png",
+        "/images/products/top-onda-um-ombro/top-onda-tecido-v1.png"
+      ],
+      "Coral": [
+        "/images/products/top-onda-um-ombro/coral/top-onda-coral-frente-v1.png",
+        "/images/products/top-onda-um-ombro/coral/top-onda-coral-costas-v1.png",
+        "/images/products/top-onda-um-ombro/coral/top-onda-coral-detalhe-v1.png",
+        "/images/products/top-onda-um-ombro/coral/top-onda-coral-tecido-v1.png"
+      ]
+    },
     "imageLabels": {
       "/images/coral/looks/look-rosa-coral-real-4x5-v2.png": "Frente",
       "/images/products/top-onda-um-ombro/top-onda-costas-v1.png": "Costas",
       "/images/products/top-onda-um-ombro/top-onda-detalhe-v1.png": "Detalhe",
-      "/images/products/top-onda-um-ombro/top-onda-tecido-v1.png": "Tecido"
+      "/images/products/top-onda-um-ombro/top-onda-tecido-v1.png": "Tecido",
+      "/images/products/top-onda-um-ombro/coral/top-onda-coral-frente-v1.png": "Frente",
+      "/images/products/top-onda-um-ombro/coral/top-onda-coral-costas-v1.png": "Costas",
+      "/images/products/top-onda-um-ombro/coral/top-onda-coral-detalhe-v1.png": "Detalhe",
+      "/images/products/top-onda-um-ombro/coral/top-onda-coral-tecido-v1.png": "Tecido"
     },
     "imagePosition": "50% 38%",
     "colors": ["Rosa", "Coral"],
@@ -61,11 +79,29 @@
       "/images/products/legging-mare-alta/legging-mare-alta-detalhe-v1.png",
       "/images/products/legging-mare-alta/legging-mare-alta-tecido-v1.png"
     ],
+    "imagesByColor": {
+      "Rosa": [
+        "/images/products/legging-mare-alta/legging-mare-alta-frente-v1.png",
+        "/images/products/legging-mare-alta/legging-mare-alta-costas-v1.png",
+        "/images/products/legging-mare-alta/legging-mare-alta-detalhe-v1.png",
+        "/images/products/legging-mare-alta/legging-mare-alta-tecido-v1.png"
+      ],
+      "Coral": [
+        "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-frente-v1.png",
+        "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-costas-v1.png",
+        "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-detalhe-v1.png",
+        "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-tecido-v1.png"
+      ]
+    },
     "imageLabels": {
       "/images/products/legging-mare-alta/legging-mare-alta-frente-v1.png": "Frente",
       "/images/products/legging-mare-alta/legging-mare-alta-costas-v1.png": "Costas",
       "/images/products/legging-mare-alta/legging-mare-alta-detalhe-v1.png": "Detalhe",
-      "/images/products/legging-mare-alta/legging-mare-alta-tecido-v1.png": "Tecido"
+      "/images/products/legging-mare-alta/legging-mare-alta-tecido-v1.png": "Tecido",
+      "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-frente-v1.png": "Frente",
+      "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-costas-v1.png": "Costas",
+      "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-detalhe-v1.png": "Detalhe",
+      "/images/products/legging-mare-alta/coral/legging-mare-alta-coral-tecido-v1.png": "Tecido"
     },
     "imagePosition": "50% 45%",
     "colors": ["Rosa", "Coral"],
