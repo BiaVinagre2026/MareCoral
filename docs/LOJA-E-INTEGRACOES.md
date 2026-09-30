@@ -5,7 +5,10 @@
 - domínio próprio; deploy somente depois da conclusão e validação do projeto;
 - loja própria, sem plataforma de e-commerce terceirizada;
 - gateway de pagamento próprio, conectado somente pelo servidor;
-- primeiro drop com 5 a 10 produtos (a demonstração atual usa 8);
+- não criar peças inexistentes para completar uma quantidade: nesta etapa, somente conjunto, top e legging das referências, nas cores rosa e coral;
+- três fotos por peça e cor: frente, costas e detalhe;
+- CEP de origem aprovado: `24340-140`; frete grátis em compras **acima de R$ 200,00**, não incluindo R$ 200,00;
+- tarifa para pedidos até R$ 200,00 ainda depende do estudo dos Correios; não atribuir valor fictício;
 - postagem em até 2 dias úteis e envio para todo o Brasil;
 - atendimento e compra pelo site, Instagram e WhatsApp oficial;
 - reaproveitamento das páginas existentes no Instagram e Facebook;
@@ -15,7 +18,6 @@
 
 - **Maré Coral / Fitness Oceânica:** loja varejista, vitrine, páginas de produto, sacola e checkout.
 - **Meu Mostruário:** backend compartilhado white-label multitenant e super admin global usado para operar o tenant `mare-coral`.
-- **BEFIT:** frontend atacadista do Meu Mostruário, sem compartilhamento de interface com a Maré Coral.
 
 O super admin global permanece no projeto Meu Mostruário. Ele não é parte do site Maré Coral, não é publicado por este repositório e não deve aparecer como uma área da loja para a cliente.
 
@@ -28,7 +30,7 @@ Na experiência da cliente, a Maré Coral deve se comportar e se comunicar como 
 3. O navegador usa o proxy de mesma origem e envia o pedido ao endpoint varejista exclusivo da Maré Coral.
 4. O navegador não envia preço, desconto nem total; o backend cria o snapshot financeiro.
 5. O endereço de entrega é registrado em campos estruturados dentro do pedido e fica disponível ao super admin global do backend.
-6. O gateway próprio e os webhooks já possuem pontos de integração no backend, mas as credenciais do tenant ainda não foram cadastradas.
+6. O gateway próprio e os webhooks já possuem pontos de integração no backend. Na verificação de 02/09/2026, o tenant estava sem URL da API, chave e segredo do callback; o callback apontava para localhost. Nenhuma cobrança foi criada.
 7. `src/data/catalog.json` é somente fallback de desenvolvimento e fonte provisória dos feeds sociais.
 8. Nenhuma chave, segredo, custo ou margem é enviada ao front-end.
 
@@ -63,8 +65,8 @@ Na experiência da cliente, a Maré Coral deve se comportar e se comunicar como 
 
 ### Limites antes de vender
 
-- o fluxo atual reaproveita um link de comprador do backend; por isso, no tenant Maré Coral, `price_wholesale` e `price_retail` estão iguais durante a prova de conceito;
-- a regra de frete ainda precisa receber o valor comercial aprovado e ser ativada no tenant pelo super admin global;
+- o fluxo varejista usa `price_retail` (ou o preço específico da variante) no servidor; o preço de atacado não determina o total da Maré Coral;
+- a gratuidade acima de R$ 200 está ativa; falta a tarifa aprovada para pedidos de até R$ 200 e o prazo da transportadora;
 - pagamento, webhook, recusa, cancelamento e estorno ainda precisam ser homologados no sandbox do gateway.
 
 ## Dados que faltam para o gateway
@@ -85,10 +87,14 @@ Cada SKU deve receber arquivos em alta resolução e fundo consistente:
 - frente com a Coral;
 - costas com a Coral;
 - detalhe de acabamento e costura;
-- close do tecido/textura;
-- opcional: movimento e vídeo vertical 9:16.
 
-As imagens atuais são demonstrativas. A página de produto mostra explicitamente quais fotos ainda estão pendentes.
+Não gerar novos modelos de roupa. As três fotos existentes por cor são suficientes. Os cinco modelos extras foram retirados da vitrine e dos feeds; seus registros e arquivos anteriores não foram apagados do backend.
+
+### Configuração comercial ativa parcialmente — 02/09/2026
+
+As decisões estão registradas em `src/data/launch-policy.json` e foram salvas por sessão autenticada do admin exclusivo no tenant `mare-coral`: CEP 24340140, regra habilitada, limite exclusivo de R$ 200, tarifa paga e prazo de transporte vazios. O backend permite frete grátis sem tarifa fixa; em R$ 200 exatos ou menos, a cotação fica não configurada e impede cobrança online. Isso não é integração automática com os Correios. A postagem continua em até 2 dias úteis; não confundir postagem com prazo de transporte.
+
+Consulte [EXECUCAO-1-A-4.md](EXECUCAO-1-A-4.md) para os testes locais e as pendências de homologação.
 
 ## Meta: Instagram e Facebook
 
@@ -116,7 +122,7 @@ O TikTok aceita catálogo por inclusão manual, upload de arquivo ou feed agenda
 
 ## Critérios antes do deploy
 
-- trocar os oito produtos demonstrativos pelos itens reais;
+- confirmar os dados comerciais das três peças com referência aprovada, sem inventar novos modelos;
 - cadastrar estoque por variante de cor e tamanho;
 - incluir fotos finais e revisar descrições/composição;
 - definir domínio final e URLs reais das redes sociais;

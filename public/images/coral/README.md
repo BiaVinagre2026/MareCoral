@@ -13,6 +13,7 @@
 | Pasta | Peça | Formatos | Estado |
 |---|---|---|---|
 | `looks/` | conjunto rosa assimétrico | 1:1, 4:5 e 9:16 | v2 com rosto refinado candidata à aprovação |
+| `looks/` | macacão esportivo marrom com zíper | retrato vertical | v1 candidata à aprovação |
 
 Os detalhes das referências, saídas e prompts estão em [`looks/look-rosa-v1.md`](looks/look-rosa-v1.md) e [`looks/look-rosa-v2.md`](looks/look-rosa-v2.md).
 

@@ -18,7 +18,6 @@ O frontend visual veio da base CCNF. Catálogo, variantes, estoque cadastrado e 
 
 - **Maré Coral / Fitness Oceânica:** loja varejista, vitrine, páginas de produto, sacola e checkout.
 - **Meu Mostruário:** backend compartilhado multitenant e super admin global. A Maré Coral utiliza somente o tenant isolado `mare-coral` dessa infraestrutura.
-- **BEFIT:** frontend atacadista do ecossistema Meu Mostruário; não faz parte do projeto Maré Coral.
 
 O super admin global não é uma tela do site Maré Coral e seu código não pertence a este repositório. A integração entre os projetos acontece exclusivamente pela API do backend compartilhado.
 
@@ -31,14 +30,13 @@ Para a cliente, a Maré Coral funciona como uma loja virtual comum. O termo `cat
 | Desenvolvimento | http://localhost:4310 | 4310 |
 | Produção local | http://localhost:4312 | 4312 |
 
-As portas ficam vinculadas somente a `127.0.0.1` e não expõem o projeto na rede local. Os nomes de projeto, containers e volumes começam com `marecoral`, evitando colisões com CCNF, Acquamare e MeuMostruario.
+O desenvolvimento usa a porta exclusiva da Maré Coral e pode ser acessado pelo computador ou pela rede local. Os nomes de projeto, containers e volumes começam com `marecoral`, evitando colisões com outros projetos.
 
 Na configuração local atual, a prévia Docker está em `http://127.0.0.1:4311`, pois a 4310 já estava ocupada e foi preservada.
 
 No Docker Desktop, os projetos ficam separados por responsabilidade:
 
 - `meumostruario`: backend compartilhado, PostgreSQL e Redis;
-- `befit`: frontend da loja atacadista;
 - `marecoral`: frontend da loja varejista Maré Coral.
 
 A Maré Coral não cria cópias da API, do banco ou do Redis. O container `marecoral-web` encaminha as operações da loja para o backend compartilhado na porta 8000.
@@ -85,8 +83,9 @@ Variáveis principais:
 
 - `VITE_MOSTRUARIO_TENANT=mare-coral` seleciona o schema isolado;
 - `VITE_MOSTRUARIO_CATALOG_TOKEN` autoriza a criação de pedidos;
-- `VITE_ALLOW_DEMO_CATALOG=true` mantém um fallback visual apenas no desenvolvimento;
 - `VITE_CHECKOUT_ENABLED=true` habilita o registro do pedido.
+
+O frontend é travado no tenant `mare-coral`. Se a API não confirmar esse tenant, a loja mostra indisponibilidade e não carrega catálogo substituto.
 
 O frontend envia somente IDs e quantidade da variação escolhida. O preço é recuperado pelo backend. O link atual aceita pedidos, registra endereço estruturado e reserva estoque. O pagamento permanece desligado até a configuração do frete e o cadastro das credenciais do gateway próprio no tenant.
 
@@ -98,7 +97,7 @@ Nenhuma credencial de pagamento deve entrar em variáveis `VITE_*`. Segredos do 
 
 ## Catálogo e redes sociais
 
-O tenant Maré Coral possui oito produtos de preparação do primeiro drop. `src/data/catalog.json` permanece como fallback de desenvolvimento e fonte provisória dos feeds. Durante o build, ele gera:
+Nesta etapa, a vitrine e os feeds ficam limitados às três peças com referência (conjunto, top e legging), nas cores rosa e coral, com frente, costas e detalhe. Os outros registros de preparação não são exibidos. `src/data/launch-policy.json` define esse recorte e registra o frete solicitado. Em 02/09/2026, o admin exclusivo salvou no backend a origem 24340-140 e frete grátis estritamente acima de R$ 200. A tarifa para pedidos menores ou iguais a R$ 200 e o prazo de transporte continuam pendentes, sem valores inventados. `src/data/catalog.json` é somente a fonte provisória dos feeds sociais e nunca aparece como substituto da API na loja. Durante o build, ele gera:
 
 - `/feeds/meta-catalog.csv`
 - `/feeds/tiktok-catalog.csv`
@@ -109,6 +108,7 @@ Os feeds só devem ser cadastrados nas redes depois do domínio estar publicado 
 
 ```powershell
 npm ci
+npm test
 npm run lint
 npm run build
 docker compose config
@@ -120,3 +120,5 @@ docker compose -f docker-compose.prod.yml config
 O acompanhamento operacional está em [docs/SEMANA1.md](docs/SEMANA1.md). A aplicação cobre a fundação técnica, vitrine, produto, carrinho, pedido, endereço e reserva de estoque. A regra comercial de frete, gateway, dados empresariais, fotos finais e operação ainda exigem conclusão antes do deploy.
 
 Os requisitos aprovados para marca, família do logo, Coral Real, Coral Ícone, try-on e vídeo estão em [docs/REQUISITOS_VISUAIS.md](docs/REQUISITOS_VISUAIS.md).
+
+A execução dos itens 1–4, os testes e os bloqueios comerciais estão em [docs/EXECUCAO-1-A-4.md](docs/EXECUCAO-1-A-4.md).
