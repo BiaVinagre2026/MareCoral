@@ -105,7 +105,6 @@ function HomePage() {
 
           <div className="hero__visual" aria-label="Coral, embaixadora digital da Maré Coral">
             <div className="hero-card">
-              <div className="hero-card__label"><Sparkles size={16} /> Conheça a Coral</div>
               <img src="/images/coral-avatar.jpeg" alt="Coral, embaixadora digital da Maré Coral, usando look fitness" />
               <div className="hero-card__caption">
                 <span>Embaixadora digital</span>
