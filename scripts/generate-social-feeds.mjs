@@ -30,7 +30,7 @@ const variants = catalog.flatMap((product) => product.colors.flatMap((color) => 
     condition: 'new',
     price: `${Number(product.price).toFixed(2)} BRL`,
     link: `${siteUrl}/produto/${product.slug}?cor=${encodeURIComponent(color)}&tamanho=${encodeURIComponent(size)}`,
-    imageLink: `${siteUrl}${product.image}`,
+    imageLink: `${siteUrl}${product.imagesByColor?.[color]?.[0] || product.image}`,
     brand: 'Maré Coral Fitwear',
     category: 'Apparel & Accessories > Clothing > Activewear',
     color,

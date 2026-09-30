@@ -1,0 +1,10 @@
+{
+  "photosPerColor": 3,
+  "shipping": {
+    "originPostalCode": "24340140",
+    "freeShippingThreshold": 200,
+    "freeShippingThresholdInclusive": false,
+    "dispatchBusinessDays": 2,
+    "paidShippingRate": null
+  }
+}

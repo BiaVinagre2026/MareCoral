@@ -33,8 +33,16 @@ function assert(condition, message) {
   if (!condition) throw new Error(message)
 }
 
-const list = await get('/api/v1/products?per_page=50')
-const summaries = list.products || []
+assert(catalogToken, 'Configure VITE_MOSTRUARIO_CATALOG_TOKEN para validar a vitrine varejista.')
+const [list, catalogResponse] = await Promise.all([
+  get('/api/v1/products?per_page=100'),
+  get(`/api/v1/catalog_links/${encodeURIComponent(catalogToken)}`),
+])
+const link = catalogResponse.catalog_link
+const summariesById = new Map((list.products || []).map((product) => [product.id, product]))
+const selectedIds = [...new Set((link.items || []).map((item) => item.product_id).filter(Boolean))]
+const summaries = selectedIds.map((id) => summariesById.get(id)).filter(Boolean)
+assert(summaries.length === selectedIds.length, 'A vitrine contém produto ausente ou não publicado no backend.')
 assert(summaries.length >= 5 && summaries.length <= 10, `O primeiro drop deve ter de 5 a 10 produtos; recebeu ${summaries.length}.`)
 
 const products = await Promise.all(summaries.map(async (summary) => {
@@ -55,14 +63,7 @@ for (const product of products) {
   }
 }
 
-if (catalogToken) {
-  const response = await get(`/api/v1/catalog_links/${encodeURIComponent(catalogToken)}`)
-  const link = response.catalog_link
-  const linkedProductIds = new Set((link.items || []).map((item) => item.product_id).filter(Boolean))
-  const missing = products.filter((product) => !linkedProductIds.has(product.id))
-  assert(link.allow_order, 'O link configurado precisa aceitar pedidos.')
-  assert(missing.length === 0, `Produtos fora do catálogo de pedido: ${missing.map((product) => product.name).join(', ')}.`)
-}
+assert(link.allow_order, 'O link configurado precisa aceitar pedidos.')
 
 const totals = products.reduce((result, product) => ({
   variants: result.variants + product.variants.length,
@@ -71,4 +72,4 @@ const totals = products.reduce((result, product) => ({
 }), { variants: 0, stock: 0, images: 0 })
 
 console.log(`Catálogo ${tenant} validado: ${products.length} produtos, ${totals.variants} variantes, ${totals.stock} unidades e ${totals.images} imagens.`)
-console.log(`Link de pedidos: ${catalogToken ? 'configurado e consistente' : 'não configurado'}.`)
+console.log('Link de pedidos: configurado e consistente.')

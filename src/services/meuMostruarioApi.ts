@@ -1,4 +1,6 @@
 import type { Product } from '../data/products.ts'
+import launchPolicy from '../data/launch-policy.json'
+import { assertMareCoralTenant, MARE_CORAL_TENANT_SLUG } from './tenantIsolation.ts'
 
 type ApiImage = {
   urls?: Record<string, string | null>
@@ -33,7 +35,7 @@ type ApiProduct = {
   sizes?: string[]
   fabric_composition?: string | null
   care_instructions?: string | null
-  size_guide?: string | null
+  size_guide?: unknown
   images?: ApiImage[]
   variants?: ApiVariant[]
 }
@@ -50,6 +52,10 @@ type ProductsResponse = {
   products: ApiProduct[]
 }
 
+type TenantConfigResponse = {
+  tenant: { slug: string }
+}
+
 export type StorefrontConnection = {
   products: Product[]
   allowOrder: boolean
@@ -57,8 +63,11 @@ export type StorefrontConnection = {
 }
 
 const apiBaseUrl = (import.meta.env.VITE_MOSTRUARIO_API_URL || '/api/v1').replace(/\/$/, '')
-export const tenantSlug = import.meta.env.VITE_MOSTRUARIO_TENANT || 'mare-coral'
+const configuredTenantSlug = (import.meta.env.VITE_MOSTRUARIO_TENANT || MARE_CORAL_TENANT_SLUG).trim()
+assertMareCoralTenant(configuredTenantSlug)
+export const tenantSlug = MARE_CORAL_TENANT_SLUG
 export const catalogToken = (import.meta.env.VITE_MOSTRUARIO_CATALOG_TOKEN || '').trim()
+const apiTimeoutMs = 12_000
 
 function apiOrigin() {
   if (!/^https?:\/\//i.test(apiBaseUrl)) return ''
@@ -77,6 +86,10 @@ function resolveAssetUrl(value?: string | null) {
 function preferredImage(image?: ApiImage | null) {
   const urls = image?.urls
   return resolveAssetUrl(urls?.regular || urls?.original || urls?.card || urls?.thumb)
+}
+
+function displayText(value: unknown, fallback: string) {
+  return typeof value === 'string' && value.trim() ? value.trim() : fallback
 }
 
 function inferSport(product: ApiProduct) {
@@ -134,6 +147,7 @@ function mapProduct(product: ApiProduct, catalogItemId?: number): Product {
     }]
   })
   const imageEntries = (product.images || [])
+    .filter((image) => (image.position || 0) < 90 && !/tecido/i.test(image.alt_text || preferredImage(image)))
     .slice()
     .sort((left, right) => (left.position || 0) - (right.position || 0))
     .map((image) => ({ image, url: preferredImage(image) }))
@@ -150,7 +164,10 @@ function mapProduct(product: ApiProduct, catalogItemId?: number): Product {
       ? rawLabel.slice(`${color} · `.length).trim()
       : rawLabel
     if (label) imageLabels[url] = label
-    if (color) (imagesByColor[color] ||= []).push(url)
+    if (color) {
+      const colorGallery = (imagesByColor[color] ||= [])
+      if (!colorGallery.includes(url) && colorGallery.length < launchPolicy.photosPerColor) colorGallery.push(url)
+    }
   })
   const variantGallery = storefrontVariants.map((variant) => variant.image).filter(Boolean) as string[]
   const gallery = Array.from(new Set([...productGallery, ...variantGallery]))
@@ -177,59 +194,80 @@ function mapProduct(product: ApiProduct, catalogItemId?: number): Product {
     stock: variants.reduce((total, variant) => total + (variant.stock_qty || 0), 0),
     stockByOption,
     variants: storefrontVariants,
-    fabric: product.fabric_composition || 'Composição a confirmar',
-    fit: product.size_guide || 'Caimento conforme guia de medidas',
-    careInstructions: product.care_instructions || undefined,
+    fabric: displayText(product.fabric_composition, 'Composição a confirmar'),
+    fit: displayText(product.size_guide, 'Medidas a confirmar'),
+    careInstructions: displayText(product.care_instructions, '') || undefined,
     badge: product.tags?.includes('Primeiro drop') ? 'Primeiro drop' : undefined,
   }
 }
 
 async function apiFetch<T>(path: string): Promise<T> {
-  const response = await fetch(`${apiBaseUrl}${path}`, {
-    headers: {
-      Accept: 'application/json',
-      'X-Tenant-ID': tenantSlug,
-    },
-  })
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), apiTimeoutMs)
 
-  if (!response.ok) {
-    const body = await response.json().catch(() => null) as { error?: string; errors?: string[] } | null
-    throw new Error(body?.errors?.join(', ') || body?.error || `Backend indisponível (${response.status})`)
+  try {
+    const response = await fetch(`${apiBaseUrl}${path}`, {
+      headers: {
+        Accept: 'application/json',
+        'X-Tenant-ID': tenantSlug,
+      },
+      signal: controller.signal,
+    })
+    if (!response.ok) {
+      const body = await response.json().catch(() => null) as { error?: string; errors?: string[] } | null
+      throw new Error(body?.errors?.join(', ') || body?.error || `Backend indisponível (${response.status})`)
+    }
+    // O limite também cobre a leitura do corpo, não apenas os cabeçalhos.
+    return await response.json() as T
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new Error('O backend demorou para responder. Tente atualizar a loja.')
+    }
+    throw error
+  } finally {
+    window.clearTimeout(timeout)
   }
-
-  return response.json() as Promise<T>
 }
 
 export async function loadStorefront(): Promise<StorefrontConnection> {
-  const list = await apiFetch<ProductsResponse>('/products?per_page=50')
-  const details = await Promise.all(list.products.map(async (product) => {
-    try {
-      const response = await apiFetch<{ product: ApiProduct }>(`/products/${encodeURIComponent(product.slug)}`)
-      return response.product
-    } catch {
-      return product
-    }
-  }))
+  const tenantConfig = await apiFetch<TenantConfigResponse>('/tenant/config')
+  assertMareCoralTenant(tenantConfig.tenant.slug)
 
-  let allowOrder = false
-  let allowPayment = false
-  const catalogItems = new Map<number, number>()
-
-  if (catalogToken) {
-    const response = await apiFetch<CatalogLinkResponse>(`/catalog_links/${encodeURIComponent(catalogToken)}`)
-    allowOrder = response.catalog_link.allow_order
-    allowPayment = response.catalog_link.allow_payment
-    response.catalog_link.items.forEach((item) => {
-      if (item.product_id) catalogItems.set(item.product_id, item.id)
-    })
+  if (!catalogToken) {
+    throw new Error('A vitrine da Maré Coral ainda não está ligada ao catálogo varejista.')
   }
 
-  const catalogProducts = catalogToken && catalogItems.size
-    ? details.filter((product) => catalogItems.has(product.id))
-    : details
+  const [list, catalogResponse] = await Promise.all([
+    apiFetch<ProductsResponse>('/products?per_page=100'),
+    apiFetch<CatalogLinkResponse>(`/catalog_links/${encodeURIComponent(catalogToken)}`),
+  ])
+  const allowOrder = catalogResponse.catalog_link.allow_order
+  const allowPayment = catalogResponse.catalog_link.allow_payment
+  const catalogItems = new Map<number, number>()
+  catalogResponse.catalog_link.items.forEach((item) => {
+    if (item.product_id && !catalogItems.has(item.product_id)) catalogItems.set(item.product_id, item.id)
+  })
+  const productsById = new Map(list.products.map((product) => [product.id, product]))
+  const storefrontProducts = Array.from(catalogItems.keys())
+    .map((productId) => productsById.get(productId))
+    .filter((product): product is ApiProduct => Boolean(product))
+  const details: ApiProduct[] = []
+
+  // O backend usa três threads no ambiente local. Lotes de três evitam que oito
+  // páginas de produto disputem a mesma conexão e deixem a vitrine carregando.
+  for (let index = 0; index < storefrontProducts.length; index += 3) {
+    const batch = storefrontProducts.slice(index, index + 3)
+    const batchDetails = await Promise.all(batch.map(async (product) => {
+      // Um resumo sem variantes não equivale a estoque zerado. Se o detalhe
+      // falhar, oferecer nova tentativa em vez de esvaziar a sacola aparente.
+      const response = await apiFetch<{ product: ApiProduct }>(`/products/${encodeURIComponent(product.slug)}`)
+      return response.product
+    }))
+    details.push(...batchDetails)
+  }
 
   return {
-    products: catalogProducts.map((product) => mapProduct(product, catalogItems.get(product.id))),
+    products: details.map((product) => mapProduct(product, catalogItems.get(product.id))),
     allowOrder,
     allowPayment,
   }
