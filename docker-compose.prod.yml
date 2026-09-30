@@ -15,7 +15,6 @@ services:
         VITE_MOSTRUARIO_API_URL: "${VITE_MOSTRUARIO_API_URL:-/api/v1}"
         VITE_MOSTRUARIO_TENANT: "${VITE_MOSTRUARIO_TENANT:-mare-coral}"
         VITE_MOSTRUARIO_CATALOG_TOKEN: "${VITE_MOSTRUARIO_CATALOG_TOKEN:-}"
-        VITE_ALLOW_DEMO_CATALOG: "${VITE_ALLOW_DEMO_CATALOG:-false}"
         VITE_CHECKOUT_ENABLED: "${VITE_CHECKOUT_ENABLED:-false}"
     container_name: marecoral-web-prod
     environment:

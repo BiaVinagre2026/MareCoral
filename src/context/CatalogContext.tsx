@@ -1,9 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { demoProducts, type Product } from '../data/products.ts'
+import type { Product } from '../data/products.ts'
 import { loadStorefront } from '../services/meuMostruarioApi.ts'
 
-type CatalogStatus = 'loading' | 'connected' | 'demo' | 'error'
+type CatalogStatus = 'loading' | 'connected' | 'error'
 
 type CatalogContextValue = {
   products: Product[]
@@ -16,10 +16,9 @@ type CatalogContextValue = {
 }
 
 const CatalogContext = createContext<CatalogContextValue | null>(null)
-const allowDemoCatalog = import.meta.env.VITE_ALLOW_DEMO_CATALOG !== 'false'
 
 function CatalogProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<Product[]>(allowDemoCatalog ? demoProducts : [])
+  const [products, setProducts] = useState<Product[]>([])
   const [status, setStatus] = useState<CatalogStatus>('loading')
   const [error, setError] = useState('')
   const [allowOrder, setAllowOrder] = useState(false)
@@ -40,8 +39,12 @@ function CatalogProvider({ children }: { children: ReactNode }) {
       })
       .catch((reason: unknown) => {
         if (!active) return
+        console.error('Falha ao carregar o catálogo do backend.', reason)
+        setAllowOrder(false)
+        setAllowPayment(false)
+        setProducts([])
         setError(reason instanceof Error ? reason.message : 'Não foi possível atualizar os produtos da loja.')
-        setStatus(allowDemoCatalog ? 'demo' : 'error')
+        setStatus('error')
       })
 
     return () => { active = false }
@@ -56,6 +59,8 @@ function CatalogProvider({ children }: { children: ReactNode }) {
     getProductBySlug: (slug?: string) => products.find((product) => product.slug === slug),
     reload: () => {
       setStatus('loading')
+      setAllowOrder(false)
+      setAllowPayment(false)
       setError('')
       setReloadKey((current) => current + 1)
     },

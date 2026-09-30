@@ -1,5 +1,3 @@
-import catalog from './catalog.json'
-
 export type ProductVariantOption = {
   id?: number
   color: string
@@ -38,10 +36,6 @@ export type Product = {
   fit: string
   careInstructions?: string
 }
-
-// Catálogo demonstrativo para validar a experiência da loja.
-// Custos e margens nunca ficam no front-end público.
-export const demoProducts = catalog as Product[]
 
 export const formatPrice = (price: number) => new Intl.NumberFormat('pt-BR', {
   style: 'currency',
