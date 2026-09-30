@@ -30,7 +30,7 @@ const collections = [
   { name: 'Maré Run', use: 'Corrida & caminhada', icon: Footprints, tone: 'aqua' },
 ]
 
-const neighborhoods = ['Camboinhas', 'Itaipu', 'Itacoatiara', 'Piratininga', 'Maravista']
+const neighborhoods = ['Camboinhas', 'Itaipu', 'Itacoatiara', 'Piratininga', 'Maravista', 'Icaraí', 'Santa Rosa']
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -114,23 +114,26 @@ function HomePage() {
             </div>
             <div className="floating-tag floating-tag--top">Niterói · RJ</div>
             <div className="floating-tag floating-tag--bottom">movimento real</div>
+            <a className="hero-cta-badge" href="#coral">
+              <Sparkles size={15} /> Conheça a Coral
+            </a>
           </div>
         </section>
 
         <section className="shop-preview" id="loja">
           <div className="shop-preview__heading">
             <div>
-              <p className="eyebrow">Coral de Largada · {status === 'connected' ? 'loja atualizada' : status === 'loading' ? 'atualizando produtos' : 'coleção de apresentação'}</p>
+              <p className="eyebrow">Coral de Largada · {status === 'connected' ? 'coleção de apresentação' : status === 'loading' ? 'atualizando produtos' : 'loja temporariamente indisponível'}</p>
               <h2>Peças que acompanham o seu movimento.</h2>
             </div>
             <p>{status === 'connected'
-              ? `${products.length} ${products.length === 1 ? 'peça disponível' : 'peças disponíveis'} no primeiro drop. Confira cores, tamanhos e disponibilidade em cada produto.`
-              : 'Uma seleção inicial para você conhecer o estilo e a energia da Maré Coral.'}</p>
+              ? 'Uma seleção inicial para você conhecer o estilo e a energia da Maré Coral.'
+              : 'Os produtos aparecem somente quando a conexão exclusiva da Maré Coral está disponível.'}</p>
           </div>
 
-          {status === 'demo' && error && (
-            <div className="catalog-status" role="status">
-              <span>Estamos atualizando a loja. Enquanto isso, conheça nossa coleção de apresentação.</span>
+          {status === 'error' && error && (
+            <div className="catalog-status" role="alert">
+              <span>Não foi possível carregar a loja da Maré Coral. Nenhum catálogo substituto será exibido.</span>
               <button type="button" onClick={reload}>Atualizar loja</button>
             </div>
           )}
@@ -166,7 +169,7 @@ function HomePage() {
                   <h3><Link to={`/produto/${product.slug}`}>{product.name}</Link></h3>
                   <div>
                     <strong>{formatPrice(product.price)}</strong>
-                    <span>ou 3x de {formatPrice(product.price / 3)}</span>
+                    <span>Confira as opções no checkout</span>
                   </div>
                 </div>
               </article>
