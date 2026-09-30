@@ -25,6 +25,7 @@ function ProductPage() {
   const [colorChoice, setColorChoice] = useState('')
   const [sizeChoice, setSizeChoice] = useState('')
   const [imageChoice, setImageChoice] = useState('')
+  const [showSizeGuide, setShowSizeGuide] = useState(false)
   const firstAvailable = product ? getFirstAvailableOption(product) : { color: '', size: '' }
   const colorCandidate = colorChoice || requestedColor || ''
   const selectedColor = product?.colors.includes(colorCandidate) && colorHasStock(product, colorCandidate)
@@ -45,7 +46,7 @@ function ProductPage() {
       : product
         ? [product.image]
         : []
-  const activeImage = gallery.includes(imageChoice) || imageChoice === '/images/coral/coral-real-identidade-v2.png'
+  const activeImage = gallery.includes(imageChoice)
     ? imageChoice
     : selectedColorImage || gallery[0] || product?.image || ''
   const related = products.filter((candidate) => candidate.id !== product?.id).slice(0, 3)
@@ -65,10 +66,10 @@ function ProductPage() {
     )
   }
 
-  const labels = ['Frente', 'Costas', 'Detalhe', 'Tecido']
+  const labels = ['Frente', 'Costas', 'Detalhe']
   const media = labels.map((label, index) => ({
     label: product.imageLabels?.[gallery[index]] || label,
-    image: gallery[index] || (index === 2 ? '/images/coral/coral-real-identidade-v2.png' : null),
+    image: gallery[index] || null,
     position: index === 0 ? product.imagePosition : undefined,
   }))
 
@@ -101,7 +102,7 @@ function ProductPage() {
             <p className="eyebrow"><Sparkles size={17} /> {product.sport} · {product.category}</p>
             <h1>{product.name}</h1>
             <p className="product-buybox__description">{product.description}</p>
-            <div className="product-buybox__price"><strong>{formatPrice(selectedPrice)}</strong><span>ou 3x de {formatPrice(selectedPrice / 3)} sem juros</span></div>
+            <div className="product-buybox__price"><strong>{formatPrice(selectedPrice)}</strong><span>Pagamento conforme disponibilidade no checkout</span></div>
 
             <fieldset className="option-picker">
               <legend>Cor: <strong>{selectedColor}</strong></legend>
@@ -111,12 +112,14 @@ function ProductPage() {
               })}</div>
             </fieldset>
             <fieldset className="option-picker option-picker--sizes">
-              <legend>Tamanho: <strong>{selectedSize}</strong> <button type="button">Guia de medidas</button></legend>
+              <legend>Tamanho: <strong>{selectedSize}</strong> <button type="button" aria-expanded={showSizeGuide} aria-controls="size-guide" onClick={() => setShowSizeGuide(!showSizeGuide)}>Guia de medidas</button></legend>
               <div>{product.sizes.map((size) => {
                 const available = getOptionStock(product, selectedColor, size)
                 return <button className={selectedSize === size ? 'is-selected' : ''} disabled={available <= 0} type="button" key={size} onClick={() => setSizeChoice(size)}>{size}</button>
               })}</div>
             </fieldset>
+
+            {showSizeGuide && <div id="size-guide" className="checkout-notice" role="status"><p>As medidas desta peça ainda precisam ser confirmadas. Não escolha o tamanho com base apenas nas imagens da Coral; consulte o atendimento antes da compra.</p></div>}
 
             <p className={`product-stock ${selectedStock > 0 ? 'product-stock--available' : 'product-stock--sold-out'}`}>
               {selectedStock > 0 ? `${selectedStock} ${selectedStock === 1 ? 'unidade disponível' : 'unidades disponíveis'} nesta combinação` : 'Combinação esgotada'}

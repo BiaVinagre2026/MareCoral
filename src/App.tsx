@@ -6,11 +6,13 @@ import CheckoutPage from './pages/CheckoutPage.tsx'
 import CartDrawer from './components/CartDrawer.tsx'
 import CartProvider from './context/CartContext.tsx'
 import CatalogProvider from './context/CatalogContext.tsx'
+import NavigationScroll from './components/NavigationScroll.tsx'
 
 function App() {
   return (
     <CatalogProvider>
       <CartProvider>
+        <NavigationScroll />
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="/produto/:slug" element={<ProductPage />} />

@@ -9,7 +9,7 @@ function CartDrawer() {
   const { products } = useCatalog()
 
   return (
-    <div className={`cart-layer ${isOpen ? 'cart-layer--open' : ''}`} aria-hidden={!isOpen}>
+    <div className={`cart-layer ${isOpen ? 'cart-layer--open' : ''}`} aria-hidden={!isOpen} inert={!isOpen}>
       <button className="cart-layer__backdrop" type="button" onClick={closeCart} aria-label="Fechar sacola" />
       <aside className="cart-drawer" role="dialog" aria-modal="true" aria-label="Sacola de compras">
         <header>

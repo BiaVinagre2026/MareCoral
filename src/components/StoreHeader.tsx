@@ -17,7 +17,7 @@ function StoreHeader() {
       </div>
       <header className="site-header store-header">
         <Link className="brand-link" to="/" aria-label="Maré Coral — início"><BrandMark /></Link>
-        <nav className={`desktop-nav ${menuOpen ? 'desktop-nav--open' : ''}`} aria-label="Navegação da loja">
+        <nav id="store-navigation" className={`desktop-nav ${menuOpen ? 'desktop-nav--open' : ''}`} aria-label="Navegação da loja">
           <Link to="/#loja" onClick={() => setMenuOpen(false)}>Loja</Link>
           <Link to="/#colecoes" onClick={() => setMenuOpen(false)}>Modalidades</Link>
           <Link to="/#coral" onClick={() => setMenuOpen(false)}>Coral</Link>
@@ -26,7 +26,7 @@ function StoreHeader() {
           <button className="nav-cta nav-cart" type="button" onClick={openCart} aria-label={`Abrir sacola com ${itemCount} itens`}>
             <ShoppingBag size={17} /> <span>{itemCount}</span>
           </button>
-          <button className="menu-button" type="button" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} onClick={() => setMenuOpen((open) => !open)}>
+          <button className="menu-button" type="button" aria-controls="store-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} onClick={() => setMenuOpen((open) => !open)}>
             {menuOpen ? <X /> : <Menu />}
           </button>
         </div>
