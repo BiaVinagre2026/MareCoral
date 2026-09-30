@@ -104,15 +104,17 @@ function HomePage() {
           </div>
 
           <div className="hero__visual" aria-label="Coral, embaixadora digital da Maré Coral">
-            <div className="hero-card">
-              <img src="/images/coral-avatar.jpeg" alt="Coral, embaixadora digital da Maré Coral, usando look fitness" />
-              <div className="hero-card__caption">
-                <span>Embaixadora digital</span>
-                <strong>Foco. Força. Praia.</strong>
+            <div className="hero-card__frame">
+              <div className="hero-card">
+                <img src="/images/coral-avatar.jpeg" alt="Coral, embaixadora digital da Maré Coral, usando look fitness" />
+                <div className="hero-card__caption">
+                  <span>Embaixadora digital</span>
+                  <strong>Foco. Força. Praia.</strong>
+                </div>
               </div>
+              <div className="floating-tag floating-tag--top">Niterói · RJ</div>
+              <div className="floating-tag floating-tag--bottom">movimento real</div>
             </div>
-            <div className="floating-tag floating-tag--top">Niterói · RJ</div>
-            <div className="floating-tag floating-tag--bottom">movimento real</div>
             <a className="hero-cta-badge" href="#coral">
               <Sparkles size={15} /> Conheça a Coral
             </a>
